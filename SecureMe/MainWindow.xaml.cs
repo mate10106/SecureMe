@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecureMe.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,11 +25,7 @@ namespace SecureMe
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-
+            _MainFrame.Content = new Views.LoginPage();
         }
     }
 }

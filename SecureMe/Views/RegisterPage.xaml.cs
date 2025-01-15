@@ -10,23 +10,29 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SecureMe.ViewModels
+namespace SecureMe.Views
 {
     /// <summary>
-    /// Interaction logic for RegisterWindow.xaml
+    /// Interaction logic for RegisterPage.xaml
     /// </summary>
-    public partial class RegisterWindow : Window
+    public partial class RegisterPage : Page
     {
-        public RegisterWindow()
+        public RegisterPage()
         {
             InitializeComponent();
         }
 
-        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        private void GoToLogin_Click(object sender, RoutedEventArgs e)
         {
+             this.NavigationService.Navigate(new LoginPage());
+        }
 
+        private void BtnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Registered Successfully");
         }
     }
 }
