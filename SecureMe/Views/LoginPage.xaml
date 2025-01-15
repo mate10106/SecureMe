@@ -5,7 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SecureMe.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="500">
+      d:DesignHeight="650" d:DesignWidth="500"
+      FontFamily="Arial">
 
     <Page.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -17,14 +18,14 @@
         <StackPanel VerticalAlignment="Center">
             <StackPanel>
                 <Image Source="/Resources/Images/mountain.png" Width="48" Height="48" />
-                <Label Content="Welcome to SecureMe" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                <Label Content="Welcome to SecureMe" FontSize="26" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,0"/>
             </StackPanel>
             <StackPanel Width="280">
-                <Label Content="Username" Foreground="White"/>
+                <Label Content="Username:" Foreground="White" FontSize="16"/>
                 <TextBox Style="{StaticResource RoundedTextBox}" />
-                <Label Content="Password" Foreground="White"/>
+                <Label Content="Password:" Foreground="White" FontSize="16" Margin="0,12,0,0"/>
                 <PasswordBox Style="{StaticResource RoundedPasswordBox}" FontSize="16"/>
-                <Button x:Name="btnLogin" Content="LOGIN" Background="SkyBlue" Foreground="White" FontWeight="Bold" Click="BtnLogin_Click" Width="120" Height="40" Cursor="Hand" Margin="0 30 0 0">
+                <Button x:Name="btnLogin" Content="LOGIN" Background="SkyBlue" Foreground="Black" FontWeight="Bold" Click="BtnLogin_Click" Width="120" Height="40" Cursor="Hand" Margin="0 30 0 0">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius"  Value="6"/>
@@ -34,8 +35,34 @@
                 <Label x:Name="lblMessage" Foreground="Red" Margin="0,10,0,0"/>
             </StackPanel>
             <StackPanel>
-                <Button x:Name="goToRegister" Click="GoToRegister_Click" Foreground="White" FontStyle="Italic" Background="Transparent" Width="160" BorderThickness="0">
-                    Do not have an account?
+                <Button Click="GoToRegister_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="FontStyle" Value="Italic"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Width" Value="160"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="Coral"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <TextBlock Text="Click here to register" Foreground="White" FontSize="16">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextDecorations" Value="{x:Null}" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="TextDecorations" Value="Underline" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Button>
             </StackPanel>
         </StackPanel>
