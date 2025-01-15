@@ -20,8 +20,8 @@
                 <Image Source="/Resources/Images/mountain.png" Width="48" Height="48"  />
                 <Label Content="Register to SecureMe" Foreground="White" FontSize="26"  HorizontalAlignment="Center" Margin="0,10,0,0"/>
             </StackPanel>
-            <StackPanel Width="280">
-                <Label Content="Username:" Foreground="White" FontSize="16"/>
+            <StackPanel Width="330">
+                <Label Content="Username:" Foreground="White" FontSize="16" Margin="0,12,0,0"/>
                 <TextBox Style="{StaticResource RoundedTextBox}" FontSize="16"/>
                 <Label Content="Password:" Foreground="White" FontSize="16" Margin="0,12,0,0"/>
                 <PasswordBox Style="{StaticResource RoundedPasswordBox}" FontSize="16"/>
@@ -37,8 +37,8 @@
                 <Label x:Name="lblMessage" Foreground="Red" Margin="0,10,0,0"/>
             </StackPanel>
             <StackPanel>
-                <Button x:Name="goToLogin" Click="GoToLogin_Click" Background="Transparent" FontStyle="Italic" Foreground="White" Width="160" BorderThickness="0">
-                    Already have an account?
+                <Button x:Name="GoToLogin" Click="GoToLogin_Click" Style="{StaticResource LinkButtonStyle}">
+                    <TextBlock Text="Click here to login" Style="{StaticResource LinkTextBlockStyle}" Foreground="White" FontSize="16" />
                 </Button>
             </StackPanel>
         </StackPanel>
