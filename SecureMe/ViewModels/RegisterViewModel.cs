@@ -8,5 +8,6 @@ namespace SecureMe.ViewModels
 {
     internal class RegisterViewModel
     {
+        
     }
 }

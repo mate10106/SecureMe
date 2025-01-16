@@ -66,5 +66,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="AuthButton" TargetType="Button">
+            <Setter Property="Background" Value="CadetBlue"/>
+        </Style>
     </Application.Resources>
 </Application>

@@ -32,7 +32,50 @@ namespace SecureMe.Views
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Registered Successfully");
+            string username = txtUsername.Text;
+            string password = txtPassword.Password.Trim();
+            string confirmPassword = txtConfirmPassword.Password.Trim();
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+            {
+                MessageBox.Show("All fields are required.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (password != confirmPassword)
+            {
+                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            SecureMe.Utilities.FileManager.InitializeStorage();
+
+            try
+            {
+                string hashedPassword = HashPassword(password);
+
+                var user = new { Username = username, PasswordHash = hashedPassword };
+                string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+
+                SecureMe.Utilities.FileManager.RegisterUser(username, hashedPassword);
+
+                MessageBox.Show("Registered Successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                this.NavigationService.Navigate(new LoginPage());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(bytes);
+            }
         }
     }
 }

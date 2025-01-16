@@ -22,11 +22,11 @@
             </StackPanel>
             <StackPanel Width="330">
                 <Label Content="Username:" Foreground="White" FontSize="16" Margin="0,12,0,0"/>
-                <TextBox Style="{StaticResource RoundedTextBox}" FontSize="16"/>
+                <TextBox x:Name="txtUsername" Style="{StaticResource RoundedTextBox}" FontSize="16"/>
                 <Label Content="Password:" Foreground="White" FontSize="16" Margin="0,12,0,0"/>
-                <PasswordBox Style="{StaticResource RoundedPasswordBox}" FontSize="16"/>
+                <PasswordBox x:Name="txtPassword" Style="{StaticResource RoundedPasswordBox}" FontSize="16"/>
                 <Label Content="Confirm Password:" Foreground="White" FontSize="16" Margin="0,12,0,0"/>
-                <PasswordBox Style="{StaticResource RoundedPasswordBox}" FontSize="16"/>
+                <PasswordBox x:Name="txtConfirmPassword" Style="{StaticResource RoundedPasswordBox}" FontSize="16"/>
                 <Button x:Name="btnRegister" Content="REGISTER" Background="SkyBlue" Foreground="Black" FontWeight="Bold" Click="BtnRegister_Click" Width="120" Height="40" Cursor="Hand" Margin="0 30 0 0">
                     <Button.Resources>
                         <Style TargetType="Border">
