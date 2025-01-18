@@ -8,13 +8,13 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
-                        <Border Background="White"
-                                BorderBrush="Gray"
+                        <Border Background="Transparent"
+                                BorderBrush="#0EA5E9"
                                 BorderThickness="2"
                                 CornerRadius="6"
                                 Padding="5"
                                 Width="330"
-                                Height="32">
+                                Height="40">
                             <ScrollViewer x:Name="PART_ContentHost" />
                         </Border>
                     </ControlTemplate>
@@ -25,13 +25,13 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Border Background="White"
-                                BorderBrush="Gray"
+                        <Border Background="Transparent"
+                                BorderBrush="#0EA5E9"
                                 BorderThickness="2"
                                 CornerRadius="6"
                                 Padding="5"
                                 Width="330"
-                                Height="32">
+                                Height="40">
                             <ScrollViewer x:Name="PART_ContentHost" />
                         </Border>
                     </ControlTemplate>
@@ -40,9 +40,8 @@
         </Style>
         <Style x:Key="LinkButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="FontStyle" Value="Italic"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Width" Value="160"/>
+            <Setter Property="Foreground" Value="#0EA5E9"/>
+            <Setter Property="Width" Value="190"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
@@ -54,7 +53,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="Coral"/>
+                    <Setter Property="Foreground" Value="#0EA5E9"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -70,7 +69,7 @@
             <Setter Property="Background" Value="#0EA5E9"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Width" Value="120"/>
+            <Setter Property="Width" Value="330"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="Margin" Value="0 30 0 0"/>
             <Setter Property="Cursor" Value="Hand"/>

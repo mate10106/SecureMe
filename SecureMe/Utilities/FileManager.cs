@@ -11,7 +11,7 @@ namespace SecureMe.Utilities
     {
         private static readonly string AppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SecureMe");
         private static readonly string FilePath = Path.Combine(AppDataFolder, "users.dat");
-        private static readonly byte[] GlobalEncryptionKey = new byte[32];
+        private static readonly byte[] GlobalEncryptionKey = Encoding.UTF8.GetBytes("YourGlobalKey1234567890123456");
 
         public static void InitializeStorage()
         {
@@ -33,18 +33,29 @@ namespace SecureMe.Utilities
 
         public static void RegisterUser(string username, string hashedPassword)
         {
+            List<dynamic> users = new List<dynamic>();
+
+            string encryptedData = ReadData();
+            if (!string.IsNullOrEmpty(encryptedData))
+            {
+                string jsonData = DecryptData(encryptedData);
+                users = JsonConvert.DeserializeObject<List<dynamic>>(jsonData) ?? new List<dynamic>();
+            }
+
             string userKey = GenerateSecureKey();
 
-            var userData = new
+            var newUser = new
             {
                 Username = username,
                 HashedPassword = hashedPassword,
                 EncryptionKey = userKey
             };
 
-            string jsonData = JsonConvert.SerializeObject(userData);
-            string encryptedData = EncryptData(jsonData);
-            SaveData(encryptedData);
+            users.Add(newUser);
+
+            string updatedJsonData = JsonConvert.SerializeObject(users);
+            string updatedEncryptedData = EncryptData(updatedJsonData);
+            SaveData(updatedEncryptedData);
 
             Console.WriteLine("User registered successfully.");
         }
@@ -55,14 +66,11 @@ namespace SecureMe.Utilities
             if (string.IsNullOrEmpty(encryptedData)) return null;
 
             string jsonData = DecryptData(encryptedData);
-            var userData = JsonConvert.DeserializeObject<dynamic>(jsonData);
+            var users = JsonConvert.DeserializeObject<List<dynamic>>(jsonData);
 
-            if (userData.Username == username && userData.HashedPassword == hashedPassword)
-            {
-                return userData.EncryptionKey;
-            }
+            var user = users?.Find(u => u.Username == username && u.HashedPassword == hashedPassword);
 
-            return null;
+            return user?.EncryptionKey;
         }
 
         private static string GenerateSecureKey()
@@ -80,7 +88,7 @@ namespace SecureMe.Utilities
             File.WriteAllText(FilePath, data);
         }
 
-        private static string ReadData()
+        public static string ReadData()
         {
             return File.Exists(FilePath) ? File.ReadAllText(FilePath) : null;
         }
@@ -90,15 +98,17 @@ namespace SecureMe.Utilities
             using (Aes aes = Aes.Create())
             {
                 aes.Key = GlobalEncryptionKey;
-                aes.IV = new byte[16];
+                aes.GenerateIV();
+                byte[] iv = aes.IV;
 
                 using (MemoryStream ms = new MemoryStream())
                 {
+                    ms.Write(iv, 0, iv.Length);
+
                     using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
                     using (StreamWriter writer = new StreamWriter(cs))
                     {
                         writer.Write(plainText);
-                        writer.Close();
                     }
 
                     return Convert.ToBase64String(ms.ToArray());
@@ -108,16 +118,23 @@ namespace SecureMe.Utilities
 
         private static string DecryptData(string encryptedText)
         {
+            byte[] cipherBytes = Convert.FromBase64String(encryptedText);
+
             using (Aes aes = Aes.Create())
             {
                 aes.Key = GlobalEncryptionKey;
-                aes.IV = new byte[16];
 
-                using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(encryptedText)))
-                using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read))
-                using (StreamReader reader = new StreamReader(cs))
+                using (MemoryStream ms = new MemoryStream(cipherBytes))
                 {
-                    return reader.ReadToEnd();
+                    byte[] iv = new byte[16];
+                    ms.Read(iv, 0, iv.Length); // Extract IV from the input
+                    aes.IV = iv;
+
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read))
+                    using (StreamReader reader = new StreamReader(cs))
+                    {
+                        return reader.ReadToEnd();
+                    }
                 }
             }
         }

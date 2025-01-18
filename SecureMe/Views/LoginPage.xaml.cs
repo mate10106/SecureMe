@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SecureMe.Models;
+using SecureMe.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +34,68 @@ namespace SecureMe.Views
         }
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Logged in Successfully");
+            string username = txtUsername.Text;
+            string password = txtPassword.Password.Trim();
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("All fields are required.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string encryptedData = FileManager.ReadData();
+
+            if (string.IsNullOrEmpty(encryptedData))
+            {
+                MessageBox.Show("No data found or data is corrupted.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+
+                Console.WriteLine($"Encrypted Data: {encryptedData}");
+
+                var decryptedData = FileManager.ReadData();
+                Console.WriteLine($"Decrypted Data: {decryptedData}");
+
+
+                var users = JsonConvert.DeserializeObject<List<User>>(encryptedData);
+
+                string hashedPassword = HashPassword(password);
+
+                var user = users?.Find(u => u.Username == username && u.PasswordHash == hashedPassword);
+
+                if (user != null)
+                {
+                    MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    MainWindow main = Application.Current.MainWindow as MainWindow;
+                    main._MainFrame.Content = new CreateMasterPasswordPage();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (JsonException jsonEx)
+            {
+                MessageBox.Show($"An error occurred while reading user data: {jsonEx.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while processing the login: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(password);
+                byte[] hash = sha256.ComputeHash(bytes);
+                return Convert.ToBase64String(hash);
+            }
         }
 
     }
