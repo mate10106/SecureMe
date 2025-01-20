@@ -30,7 +30,7 @@
             </StackPanel>
             <StackPanel>
                 <Button Click="GoToRegister_Click" Style="{StaticResource LinkButtonStyle}">
-                    <TextBlock Text="Click here to register" FontSize="16" Style="{StaticResource LinkTextBlockStyle }" />
+                    <TextBlock Text="Click here to register" FontSize="16" Style="{StaticResource LinkTextBlockStyle}" />
                 </Button>
             </StackPanel>
         </StackPanel>
