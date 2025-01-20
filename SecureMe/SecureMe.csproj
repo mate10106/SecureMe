@@ -65,6 +65,9 @@
     <Compile Include="Views\CreateMasterPasswordPage.xaml.cs">
       <DependentUpon>CreateMasterPasswordPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MasterPasswordPage.xaml.cs">
+      <DependentUpon>MasterPasswordPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CreateMasterPasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MasterPasswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
