@@ -8,20 +8,33 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
-                        <Border x:Name="border"
-                                Background="#1C2A3A"
-                                BorderBrush="#0EA5E9"
-                                BorderThickness="1"
-                                CornerRadius="6"
-                                Padding="5"
-                                Width="330"
-                                Height="43">
-                            <ScrollViewer x:Name="PART_ContentHost" />
-                        </Border>
+                        <Grid>
+                            <Border x:Name="border"
+                                    Background="#1C2A3A"
+                                    BorderBrush="#0EA5E9"
+                                    BorderThickness="1"
+                                    CornerRadius="6"
+                                    Padding="5"
+                                    Width="330"
+                                    Height="43">
+                                <ScrollViewer x:Name="PART_ContentHost" />
+                            </Border>
+
+                            <TextBlock x:Name="Placeholder"
+                                       Text="Password"
+                                       Foreground="Gray"
+                                       Margin="10,0,0,0"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False"
+                                       Visibility="Visible"/>
+                        </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#0284C7"/>
                                 <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -32,20 +45,32 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Border x:Name="border"
-                                Background="#1C2A3A"
-                                BorderBrush="#0EA5E9"
-                                BorderThickness="1"
-                                CornerRadius="6"
-                                Padding="5"
-                                Width="330"
-                                Height="43">
-                            <ScrollViewer x:Name="PART_ContentHost" />
-                        </Border>
+                        <Grid>
+                            <Border x:Name="border"
+                                    Background="#1C2A3A"
+                                    BorderBrush="#0EA5E9"
+                                    BorderThickness="1"
+                                    CornerRadius="6"
+                                    Padding="5"
+                                    Width="330"
+                                    Height="43">
+                                <ScrollViewer x:Name="PART_ContentHost" />
+                            </Border>
+                            <TextBlock x:Name="Placeholder"
+                                       Text="Username"
+                                       Foreground="Gray"
+                                       Margin="10,0,0,0"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False"
+                                       Visibility="Visible"/>      
+                        </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#0EA5E9" />
                                 <Setter TargetName="border" Property="BorderThickness" Value="2" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
