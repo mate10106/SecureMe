@@ -34,7 +34,7 @@ namespace SecureMe.Views
         }
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string username = txtUsername.Text;
+            string username = txtUsername.Text.Trim();
             string password = txtPassword.Password.Trim();
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
@@ -43,28 +43,24 @@ namespace SecureMe.Views
                 return;
             }
 
-            string encryptedData = FileManager.ReadData();
-
-            if (string.IsNullOrEmpty(encryptedData))
-            {
-                MessageBox.Show("No data found or data is corrupted.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             try
             {
+                string encryptedData = FileManager.ReadData();
 
-                Console.WriteLine($"Encrypted Data: {encryptedData}");
+                if (string.IsNullOrEmpty(encryptedData))
+                {
+                    MessageBox.Show("No data found or data is corrupted.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-                var decryptedData = FileManager.ReadData();
-                Console.WriteLine($"Decrypted Data: {decryptedData}");
+                var decryptedData = FileManager.DecryptData(encryptedData);
 
-
-                var users = JsonConvert.DeserializeObject<List<User>>(encryptedData);
+                var users = JsonConvert.DeserializeObject<List<User>>(decryptedData);
 
                 string hashedPassword = HashPassword(password);
+                Console.WriteLine($"Login Attempt: Username={username}, HashedPassword={hashedPassword}");
 
-                var user = users?.Find(u => u.Username == username && u.PasswordHash == hashedPassword);
+                var user = users?.Find(u => u.Username == username && u.HashedPassword == hashedPassword);
 
                 if (user != null)
                 {

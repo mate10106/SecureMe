@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace SecureMe.Models
 {
-    internal class User
+    public class User
     {
         public string Username { get; set; }
-        public string PasswordHash { get; set; }
+        public string HashedPassword { get; set; }
+        public string EncryptionKey { get; set; }
     }
+
 }

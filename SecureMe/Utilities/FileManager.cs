@@ -11,7 +11,7 @@ namespace SecureMe.Utilities
     {
         private static readonly string AppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SecureMe");
         private static readonly string FilePath = Path.Combine(AppDataFolder, "users.dat");
-        private static readonly byte[] GlobalEncryptionKey = Encoding.UTF8.GetBytes("YourGlobalKey1234567890123456");
+        private static readonly byte[] GlobalEncryptionKey = new byte[32];
 
         public static void InitializeStorage()
         {
@@ -116,7 +116,7 @@ namespace SecureMe.Utilities
             }
         }
 
-        private static string DecryptData(string encryptedText)
+        public static string DecryptData(string encryptedText)
         {
             byte[] cipherBytes = Convert.FromBase64String(encryptedText);
 
