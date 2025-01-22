@@ -58,7 +58,6 @@ namespace SecureMe.Views
                 var users = JsonConvert.DeserializeObject<List<User>>(decryptedData);
 
                 string hashedPassword = HashPassword(password);
-                Console.WriteLine($"Login Attempt: Username={username}, HashedPassword={hashedPassword}");
 
                 var user = users?.Find(u => u.Username == username && u.HashedPassword == hashedPassword);
 
