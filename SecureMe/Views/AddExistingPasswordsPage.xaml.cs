@@ -24,5 +24,15 @@ namespace SecureMe.Views
         {
             InitializeComponent();
         }
+
+        private void SkipImport_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ImportButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
