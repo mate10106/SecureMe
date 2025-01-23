@@ -127,7 +127,7 @@ namespace SecureMe.Utilities
                 using (MemoryStream ms = new MemoryStream(cipherBytes))
                 {
                     byte[] iv = new byte[16];
-                    ms.Read(iv, 0, iv.Length); // Extract IV from the input
+                    ms.Read(iv, 0, iv.Length);
                     aes.IV = iv;
 
                     using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read))

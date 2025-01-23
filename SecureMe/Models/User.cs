@@ -10,7 +10,9 @@ namespace SecureMe.Models
     {
         public string Username { get; set; }
         public string HashedPassword { get; set; }
-        public string EncryptionKey { get; set; }
+        public string EncryptionKey { get; set; } 
+        public string HashedMasterPassword { get; set; }
+        public DateTime LastLoginDate { get; set; }
     }
 
 }

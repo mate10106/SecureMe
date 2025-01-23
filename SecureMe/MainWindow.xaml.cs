@@ -1,4 +1,5 @@
-﻿using SecureMe.Views;
+﻿using SecureMe.Models;
+using SecureMe.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,29 @@ namespace SecureMe
         public MainWindow()
         {
             InitializeComponent();
-            _MainFrame.Content = new Views.LoginPage();
+
+            CheckMasterPasswordAndNavigate();
+        }
+
+        private void CheckMasterPasswordAndNavigate()
+        {
+            User user = UserManager.LoadUser();
+
+            if (user == null || string.IsNullOrEmpty(user.HashedMasterPassword))
+            {
+                _MainFrame.Content = new CreateMasterPasswordPage();
+            }
+            else
+            {
+                if (user.LastLoginDate.AddDays(14) < DateTime.Now)
+                {
+                    _MainFrame.Content = new MasterPasswordPage();
+                }
+                else
+                {
+                    _MainFrame.Content = new HomePage();
+                }
+            }
         }
     }
 }

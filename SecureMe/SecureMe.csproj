@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserManager.cs" />
     <Compile Include="Utilities\FileManager.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
@@ -67,6 +68,9 @@
     </Compile>
     <Compile Include="Views\CreateMasterPasswordPage.xaml.cs">
       <DependentUpon>CreateMasterPasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MasterPasswordPage.xaml.cs">
       <DependentUpon>MasterPasswordPage.xaml</DependentUpon>
@@ -97,6 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateMasterPasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
