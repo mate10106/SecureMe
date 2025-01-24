@@ -24,5 +24,37 @@ namespace SecureMe.Views
         {
             InitializeComponent();
         }
+
+        private void BtnMasterPassword_Click(object sender, RoutedEventArgs e)
+        {
+            string password = txtMasterPassword.Password.Trim();
+            string confirmPassword = txtConfirmMasterPassword.Password.Trim();
+
+
+            if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+            {
+                MessageBox.Show("All fields are required.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (password != confirmPassword)
+            {
+                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            SecureMe.Utilities.FileManager.InitializeStorage();
+
+            try
+            {
+                string hashedPassword = SecureMe.Utilities.PasswordHasher.HashPassword(password);
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
