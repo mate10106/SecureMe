@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserManager.cs" />
+    <Compile Include="Utilities\EncryptionHelper.cs" />
     <Compile Include="Utilities\FileManager.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

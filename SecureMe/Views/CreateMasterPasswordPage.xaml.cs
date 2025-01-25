@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecureMe.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,13 +48,25 @@ namespace SecureMe.Views
 
             try
             {
-                string hashedPassword = SecureMe.Utilities.PasswordHasher.HashPassword(password);
+                User existingUser = UserManager.LoadUser();
 
+                if (existingUser != null)
+                {
+                    existingUser.HashedMasterPassword = Utilities.PasswordHasher.HashPassword(password);
+                    UserManager.SaveUser(existingUser);
+
+                    MessageBox.Show("Master password set successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    NavigationService.Navigate(new HomePage());
+                }
+                else
+                {
+                    MessageBox.Show("Failed to load user data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

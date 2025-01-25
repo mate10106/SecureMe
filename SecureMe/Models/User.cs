@@ -14,5 +14,4 @@ namespace SecureMe.Models
         public string HashedMasterPassword { get; set; }
         public DateTime LastLoginDate { get; set; }
     }
-
 }
