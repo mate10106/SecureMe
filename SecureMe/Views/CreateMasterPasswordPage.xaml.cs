@@ -53,6 +53,7 @@ namespace SecureMe.Views
                 if (existingUser != null)
                 {
                     existingUser.HashedMasterPassword = Utilities.PasswordHasher.HashPassword(password);
+                    existingUser.LastLoginDate = DateTime.Now;
                     UserManager.SaveUser(existingUser);
 
                     MessageBox.Show("Master password set successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);

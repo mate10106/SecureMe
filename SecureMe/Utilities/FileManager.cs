@@ -10,7 +10,7 @@ namespace SecureMe.Utilities
     public static class FileManager
     {
         private static readonly string AppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SecureMe");
-        private static readonly string FilePath = Path.Combine(AppDataFolder, "users.dat");
+        public static readonly string FilePath = Path.Combine(AppDataFolder, "users.dat");
         private static readonly byte[] GlobalEncryptionKey = new byte[32];
 
         public static void InitializeStorage()
@@ -48,7 +48,8 @@ namespace SecureMe.Utilities
             {
                 Username = username,
                 HashedPassword = hashedPassword,
-                EncryptionKey = userKey
+                EncryptionKey = userKey,
+                LastLoginDate = DateTime.Now
             };
 
             users.Add(newUser);
@@ -93,7 +94,7 @@ namespace SecureMe.Utilities
             return File.Exists(FilePath) ? File.ReadAllText(FilePath) : null;
         }
 
-        private static string EncryptData(string plainText)
+        public static string EncryptData(string plainText)
         {
             using (Aes aes = Aes.Create())
             {
@@ -136,6 +137,14 @@ namespace SecureMe.Utilities
                         return reader.ReadToEnd();
                     }
                 }
+            }
+        }
+        public static void EnsureDirectoryExists()
+        {
+            string directoryPath = Path.GetDirectoryName(FilePath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
             }
         }
     }

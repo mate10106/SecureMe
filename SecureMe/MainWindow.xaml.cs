@@ -1,53 +1,57 @@
 ﻿using SecureMe.Models;
+using SecureMe.Utilities;
 using SecureMe.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SecureMe
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private const int LoginValidityDays = 14;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            CheckMasterPasswordAndNavigate();
+            CheckFileAndNavigate();
         }
 
-        private void CheckMasterPasswordAndNavigate()
+        private void CheckFileAndNavigate()
         {
-            User user = UserManager.LoadUser();
+            string userFilePath = FileManager.FilePath;
 
-            if (user == null || string.IsNullOrEmpty(user.HashedMasterPassword))
+            if (!File.Exists(userFilePath))
+            {
+                _MainFrame.Content = new RegisterPage();
+                Console.WriteLine("Navigating to RegisterPage as no user file exists.");
+                return;
+            }
+
+            User user = UserManager.LoadUser();
+            if (user == null)
+            {
+                _MainFrame.Content = new RegisterPage();
+                Console.WriteLine("User file is invalid. Navigating to RegisterPage.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(user.HashedMasterPassword))
             {
                 _MainFrame.Content = new CreateMasterPasswordPage();
+                Console.WriteLine("Navigating to CreateMasterPasswordPage as no master password is set.");
+                return;
+            }
+
+            if (user.LastLoginDate == default || user.LastLoginDate.AddDays(LoginValidityDays) < DateTime.Now)
+            {
+                _MainFrame.Content = new MasterPasswordPage();
+                Console.WriteLine("Navigating to MasterPasswordPage for authentication.");
             }
             else
             {
-                if (user.LastLoginDate.AddDays(14) < DateTime.Now)
-                {
-                    _MainFrame.Content = new MasterPasswordPage();
-                }
-                else
-                {
-                    _MainFrame.Content = new HomePage();
-                }
+                _MainFrame.Content = new HomePage();
+                Console.WriteLine("Navigating to HomePage.");
             }
         }
     }

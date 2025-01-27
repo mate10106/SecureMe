@@ -15,25 +15,35 @@ namespace SecureMe.Models
 
         public static User LoadUser()
         {
-            if (File.Exists(userFilePath))
+            try
             {
-                try
+                if (!File.Exists(userFilePath))
                 {
-                    string json = File.ReadAllText(userFilePath);
-                    Console.WriteLine($"File Content: {json}");
-                    return JsonConvert.DeserializeObject<User>(json);
+                    Console.WriteLine($"User file does not exist at: {userFilePath}");
+                    return null;
                 }
-                catch (Exception ex)
+
+                string encryptedData = File.ReadAllText(userFilePath);
+
+                string decryptedData = SecureMe.Utilities.FileManager.DecryptData(encryptedData);
+
+                var users = JsonConvert.DeserializeObject<List<User>>(decryptedData);
+
+                if (users != null && users.Count > 0)
                 {
-                    Console.WriteLine($"Error deserializing user data: {ex.Message}");
+                    return users[0];
                 }
+
+                Console.WriteLine("No users found in the decrypted data.");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"User file does not exist at: {userFilePath}");
+                Console.WriteLine($"Error deserializing user data: {ex.Message}");
             }
             return null;
         }
+
+
 
         public static void SaveUser(User user)
         {
@@ -44,13 +54,24 @@ namespace SecureMe.Models
                     Directory.CreateDirectory(appDataFolder);
                 }
 
-                string json = JsonConvert.SerializeObject(user, Formatting.Indented);
-                File.WriteAllText(userFilePath, json);
+                List<User> users = new List<User> { user };
+
+                string json = JsonConvert.SerializeObject(users, Formatting.Indented);
+
+                string encryptedData = SecureMe.Utilities.FileManager.EncryptData(json);
+
+                File.WriteAllText(userFilePath, encryptedData);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error saving user data: {ex.Message}");
             }
+        }
+
+        public static bool HasMasterPassword()
+        {
+            User user = LoadUser();
+            return user != null && !string.IsNullOrEmpty(user.HashedMasterPassword);
         }
 
         public static bool UserFileExists()
