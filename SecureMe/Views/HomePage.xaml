@@ -18,9 +18,29 @@
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" BorderBrush="Red" BorderThickness="2" Margin="5" CornerRadius="10">
-            <TextBlock Text="Left Section" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-        </Border>
+
+        <StackPanel Grid.Column="0" HorizontalAlignment="Left" Margin="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5">
+                <Image Source="/Resources/Images/mountain.png" Width="22" Height="22" VerticalAlignment="Center" />
+                <Label Content="Vault" FontSize="16" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" />
+            </StackPanel>
+            <StackPanel>
+                <TextBox Width="200" Height="30" Margin="0,15"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center">
+                <Button Content="All Items" Width="200" Height="28" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Passwords" Width="200" Height="28" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Personal Info" Width="200" Height="28" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Trash" Width="200" Height="28" Style="{StaticResource CustomButtonStyle}"/>
+            </StackPanel>
+            
+            <Label Content="TOOLS" FontSize="9" FontWeight="Bold" Foreground="White" Margin="0,20,0,10" />
+            <StackPanel HorizontalAlignment="Center">
+                <Button Content="Password Generator" Width="200" Height="28" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Password Health" Width="200" Height="28" Style="{StaticResource CustomButtonStyle}"/>
+            </StackPanel>
+        </StackPanel>
+
         <Border Grid.Column="1" BorderBrush="Yellow" BorderThickness="2" Margin="5" CornerRadius="10">
             <TextBlock Text="Right Section" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
         </Border>
