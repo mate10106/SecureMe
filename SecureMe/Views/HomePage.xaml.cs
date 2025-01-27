@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecureMe.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,25 @@ namespace SecureMe.Views
         public HomePage()
         {
             InitializeComponent();
+        }
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                User _currentUser = UserManager.LoadUser();
+
+                _currentUser.IsLoggedIn = false;
+
+                UserManager.SaveUser(_currentUser);
+
+                NavigationService.Navigate(new MasterPasswordPage());
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
     }
 }

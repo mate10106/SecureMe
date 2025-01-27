@@ -4,6 +4,7 @@ using SecureMe.Views;
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace SecureMe
 {
@@ -52,6 +53,15 @@ namespace SecureMe
             {
                 _MainFrame.Content = new HomePage();
                 Console.WriteLine("Navigating to HomePage.");
+            }
+
+            if (user != null && user.IsLoggedIn)
+            {
+                _MainFrame.Content = new HomePage();
+            }
+            else
+            {
+                _MainFrame.Content = new MasterPasswordPage();
             }
         }
     }

@@ -13,5 +13,6 @@ namespace SecureMe.Models
         public string EncryptionKey { get; set; } 
         public string HashedMasterPassword { get; set; }
         public DateTime LastLoginDate { get; set; }
+        public bool IsLoggedIn { get; set; }
     }
 }

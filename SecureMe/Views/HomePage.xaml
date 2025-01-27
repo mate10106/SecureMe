@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SecureMe.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="800"
       FontFamily="Arial">
     <Page.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -40,6 +40,9 @@
                 <Button Content="Password Health" Width="200" Height="28" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
         </StackPanel>
+        <Border VerticalAlignment="Bottom" Margin="10" BorderThickness="0" CornerRadius="12">
+            <Button Content="Logout" Click="BtnLogout_Click" Background="Red" Height="23" />
+        </Border>
 
         <Border Grid.Column="1" BorderBrush="Yellow" BorderThickness="2" Margin="5" CornerRadius="10">
             <TextBlock Text="Right Section" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>

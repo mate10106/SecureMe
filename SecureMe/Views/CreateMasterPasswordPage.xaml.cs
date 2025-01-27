@@ -57,7 +57,7 @@ namespace SecureMe.Views
                     UserManager.SaveUser(existingUser);
 
                     MessageBox.Show("Master password set successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    NavigationService.Navigate(new HomePage());
+                    NavigationService.Navigate(new MasterPasswordPage());
                 }
                 else
                 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecureMe.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,49 @@ namespace SecureMe.Views
         public MasterPasswordPage()
         {
             InitializeComponent();
+        }
+
+        private void BtnLoginWithMasterPassword_Click(object sender, RoutedEventArgs e)
+        {
+            string masterPassword = txtMasterPassword.Password.Trim();
+
+            if (string.IsNullOrEmpty(masterPassword))
+            {
+                MessageBox.Show("Fields is required.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                User _currentUser = UserManager.LoadUser();
+
+                if (_currentUser == null)
+                {
+                    MessageBox.Show("No user found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                string encryptedMasterPassword = Utilities.PasswordHasher.HashPassword(masterPassword);
+
+                if (_currentUser.HashedMasterPassword != encryptedMasterPassword)
+                {
+                    MessageBox.Show("Invalid master password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                _currentUser.IsLoggedIn = true;
+
+                UserManager.SaveUser(_currentUser);
+
+                NavigationService.Navigate(new HomePage());
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
     }
 }
