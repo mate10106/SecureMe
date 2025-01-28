@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SecureMe.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+      Height="750" Width="1340"
       FontFamily="Arial">
     <Page.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -15,11 +15,11 @@
     </Page.Background>
     <Grid Margin="10" FlowDirection="LeftToRight">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="217*" />
+            <ColumnDefinition Width="1103*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" HorizontalAlignment="Left" Margin="5">
+        <StackPanel HorizontalAlignment="Center" Margin="0,5,0,5" Width="224"  Grid.Column="0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5">
                 <Image Source="/Resources/Images/mountain.png" Width="22" Height="22" VerticalAlignment="Center" />
                 <Label Content="Vault" FontSize="16" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" />
@@ -28,24 +28,22 @@
                 <TextBox Width="180" Height="30" Margin="0,15" Background="Transparent"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Center">
-                <Button Content="All Items" Width="200" Height="28" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Passwords" Width="200" Height="28" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Personal Info" Width="200" Height="28" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Trash" Width="200" Height="28" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="All Items" Width="200" Height="36" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Passwords" Width="200" Height="36" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Personal Info" Width="200" Height="36" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Trash" Width="200" Height="36" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
-            
-            <Label Content="TOOLS" FontSize="9" FontWeight="Bold" Foreground="White" Margin="0,20,0,10" />
+
+            <Label Content="TOOLS" FontSize="9" FontWeight="Bold" Foreground="#1C424B" Margin="0,20,0,3" />
             <StackPanel HorizontalAlignment="Center">
-                <Button Content="Password Generator" Width="200" Height="28" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Password Health" Width="200" Height="28" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Password Generator" Width="200" Height="36" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Password Health" Width="200" Height="36" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
         </StackPanel>
-        <Border VerticalAlignment="Bottom" Margin="10" BorderThickness="0" CornerRadius="12">
-            <Button Content="Logout" Click="BtnLogout_Click" Background="Red" Height="23" />
-        </Border>
+        <Button Content="Logout" Click="BtnLogout_Click" VerticalAlignment="Bottom" Background="Red" Width="200" Height="36" Foreground="White" FontSize="14" FontWeight="Bold" Cursor="Hand" Margin="0,0,0,5" />
 
-        <Border Grid.Column="1" BorderBrush="Yellow" BorderThickness="2" Margin="5" CornerRadius="10">
+        <StackPanel Margin="2,5,5,5" Grid.Column="1">
             <TextBlock Text="Right Section" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-        </Border>
+        </StackPanel>
     </Grid>
 </Page>
