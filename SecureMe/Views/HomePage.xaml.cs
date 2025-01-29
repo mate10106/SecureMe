@@ -24,6 +24,36 @@ namespace SecureMe.Views
         public HomePage()
         {
             InitializeComponent();
+
+            MainContentFrame.Navigate(new AllItemsPage());
+        }
+
+        private void BtnAllItems_Click(object sender, RoutedEventArgs e)
+        {
+            MainContentFrame.Navigate(new AllItemsPage());
+        }
+        private void BtnPasswords_Click(object sender, RoutedEventArgs e)
+        {
+            MainContentFrame.Navigate(new PasswordsPage());
+        }
+
+        private void BtnPersonalInfo_Click(object sender, RoutedEventArgs e)
+        {
+            MainContentFrame.Navigate(new PersonalInfoPage());
+        }
+        private void BtnTrash_Click(object sender, RoutedEventArgs e)
+        {
+            MainContentFrame.Navigate(new TrashPage());
+        }
+
+        private void BtnPasswordGenerator_Click(object sender, RoutedEventArgs e)
+        {
+            MainContentFrame.Navigate(new PasswordGeneratorPage());
+        }
+
+        private void BtnPasswordHealth_Click(object sender, RoutedEventArgs e)
+        {
+            MainContentFrame.Navigate(new PasswordHealthPage());
         }
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {

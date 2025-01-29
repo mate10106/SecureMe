@@ -14,7 +14,7 @@
             <GradientStop Color="#1E293B" Offset="1" />
         </LinearGradientBrush>
     </Window.Background>
-    <Grid Margin="10">
+    <Grid>
         <Frame x:Name="_MainFrame" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

@@ -68,6 +68,9 @@
     <Compile Include="Views\AddExistingPasswordsPage.xaml.cs">
       <DependentUpon>AddExistingPasswordsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AllItemsPage.xaml.cs">
+      <DependentUpon>AllItemsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateMasterPasswordPage.xaml.cs">
       <DependentUpon>CreateMasterPasswordPage.xaml</DependentUpon>
     </Compile>
@@ -80,11 +83,26 @@
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PasswordGeneratorPage.xaml.cs">
+      <DependentUpon>PasswordGeneratorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PasswordHealthPage.xaml.cs">
+      <DependentUpon>PasswordHealthPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PasswordsPage.xaml.cs">
+      <DependentUpon>PasswordsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PersonalInfoPage.xaml.cs">
+      <DependentUpon>PersonalInfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RecoveryPhrase.xaml.cs">
       <DependentUpon>RecoveryPhrase.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrashPage.xaml.cs">
+      <DependentUpon>TrashPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -99,6 +117,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddExistingPasswordsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AllItemsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,11 +140,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PasswordGeneratorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PasswordHealthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PasswordsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PersonalInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RecoveryPhrase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RegisterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TrashPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

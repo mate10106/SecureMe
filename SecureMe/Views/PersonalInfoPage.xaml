@@ -1,0 +1,21 @@
+﻿<Page x:Class="SecureMe.Views.PersonalInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SecureMe.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      FontFamily="Arial">
+    <Page.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#0F172A" Offset="0" />
+            <GradientStop Color="#1E293B" Offset="1" />
+        </LinearGradientBrush>
+    </Page.Background>
+    <Grid>
+        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White">
+            PERSONAL INFO PAGE
+        </TextBlock>
+    </Grid>
+</Page>

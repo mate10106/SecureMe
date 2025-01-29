@@ -13,31 +13,45 @@
             <GradientStop Color="#1E293B" Offset="1" />
         </LinearGradientBrush>
     </Page.Background>
-    <Grid Margin="10" FlowDirection="LeftToRight">
+    <Grid FlowDirection="LeftToRight">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="217*" />
             <ColumnDefinition Width="1103*" />
         </Grid.ColumnDefinitions>
 
-        <Border BorderBrush="#334155" BorderThickness="0,0,1,0">
+        <Border BorderBrush="#334155" BorderThickness="0,0,1,0" CornerRadius="6">
             <StackPanel HorizontalAlignment="Center" Margin="0,5,0,5" Width="224"  Grid.Column="0">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12">
                     <Image Source="/Resources/Images/mountain.png" Width="22" Height="22" VerticalAlignment="Center" />
-                    <Label Content="Vault" FontSize="16" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <Label Content="Vault" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
                 <TextBox Style="{StaticResource RoundedSearchBar}" FontSize="16" Foreground="White"/>
                 <StackPanel HorizontalAlignment="Center">
-                    <Button Content="All Items" Width="200" Height="36" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
-                    <Button Content="Passwords" Width="200" Height="36" Style="{StaticResource CustomButtonStyle}"/>
-                    <Button Content="Personal Info" Width="200" Height="36" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
-                    <Button Content="Trash" Width="200" Height="36" Style="{StaticResource CustomButtonStyle}"/>
+                    <Button Click="BtnAllItems_Click" Width="200" Height="36" Margin="0,10" Style="{StaticResource CustomButtonStyle}">
+                        <TextBlock Text="All Items" TextAlignment="Left" Width="180"/>
+                    </Button>
+                    <Button Click="BtnPasswords_Click" Width="200" Height="36" Style="{StaticResource CustomButtonStyle}">
+                        <TextBlock Text="Passwords" TextAlignment="Left" Width="180"/>
+                    </Button>
+                    <Button Click="BtnPersonalInfo_Click" Width="200" Height="36" Margin="0,10" Style="{StaticResource CustomButtonStyle}">
+                        <TextBlock Text="Personal Info" TextAlignment="Left" Width="180"/>
+                    </Button>
+                    <Button Click="BtnTrash_Click" Width="200" Height="36" Style="{StaticResource CustomButtonStyle}">
+                        <TextBlock Text="Trash" TextAlignment="Left" Width="180"/>
+                    </Button>
                 </StackPanel>
 
                 <Label Content="TOOLS" FontSize="9" FontWeight="Bold" Foreground="#1C424B" Margin="0,20,0,3" />
-                <StackPanel HorizontalAlignment="Center">
-                    <Button Content="Password Generator" Width="200" Height="36" Margin="0,10" Style="{StaticResource CustomButtonStyle}"/>
-                    <Button Content="Password Health" Width="200" Height="36" Style="{StaticResource CustomButtonStyle}"/>
-                </StackPanel>
+                <Border BorderBrush="#334155" BorderThickness="0,0,0,1">
+                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,21">
+                        <Button Click="BtnPasswordGenerator_Click" Width="200" Height="36" Margin="0,10" Style="{StaticResource CustomButtonStyle}">
+                            <TextBlock Text="Password Generator" TextAlignment="Left" Width="180"/>
+                        </Button>
+                        <Button Click="BtnPasswordHealth_Click" Width="200" Height="36" Style="{StaticResource CustomButtonStyle}">
+                            <TextBlock Text="Password Health" TextAlignment="Left" Width="180"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Border>
         <Border Style="{StaticResource LogoutBorderStyle}" Height="38" Width="200" VerticalAlignment="Bottom">
@@ -46,8 +60,6 @@
             Style="{StaticResource LogoutButtonStyle}"/>
         </Border>
 
-        <StackPanel Margin="2,5,5,5" Grid.Column="1">
-            <TextBlock Text="Right Section" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-        </StackPanel>
+        <Frame x:Name="MainContentFrame" Margin="2,5,5,5" Grid.Column="1" />
     </Grid>
 </Page>
