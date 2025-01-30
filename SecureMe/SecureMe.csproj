@@ -58,6 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\PasswordManager.cs" />
+    <Compile Include="Models\Passwords.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserManager.cs" />
     <Compile Include="Utilities\EncryptionHelper.cs" />
