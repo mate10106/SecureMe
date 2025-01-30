@@ -146,9 +146,8 @@
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Width" Value="330"/>
                 <Setter Property="Height" Value="40"/>
-                <Setter Property="Margin" Value="0 30 0 0"/>
-                <Setter Property="Cursor" Value="Hand"/>
-                <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -308,6 +307,103 @@
                         BorderBrush="Transparent">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CustomCheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <Border x:Name="CheckBoxBorder"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="2"
+                            CornerRadius="5"
+                            Width="1070"
+                            Height="40"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+ 
+                                <Path x:Name="CheckMark"
+                              Data="M 0 5 L 5 10 L 12 0"
+                              Stroke="White"
+                              StrokeThickness="2"
+                              Visibility="Collapsed"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"/>
+                            </Border>
+
+                            <Border x:Name="AbbreviationCube"
+                            Background="#1E90FF"
+                            Width="24"
+                            Height="24"
+                            CornerRadius="4"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Margin="30,0,10,0">
+                                <TextBlock Text="{TemplateBinding Tag}"
+                                   Foreground="White"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                            </Border>
+
+                            <ContentPresenter x:Name="ContentPresenter"
+                                      Margin="70,0,0,0"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left"/>
+                            <TextBlock x:Name="DateText"
+                               Text="{TemplateBinding ToolTip}"
+                               Foreground="White"
+                               FontSize="12"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right"
+                               Margin="0,0,2,0"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="CheckBoxBorder" Property="Background" Value="#1E90FF" />
+                                <!-- Blue background when checked -->
+                            </Trigger>
+                            <!-- Trigger for MouseOver State -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="CheckBoxBorder" Property="BorderBrush" Value="#1E90FF" />
+                                <Setter TargetName="AbbreviationCube" Property="Background" Value="#1C86EE" />
+                            </Trigger>
+                       
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="CheckBoxBorder" Property="Background" Value="#1C86EE" />
+  
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#64748B"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid>
+                            <Rectangle Fill="{TemplateBinding Background}" />
+                            <Track Name="PART_Track">
+                                <Track.Thumb>
+                                    <Thumb Background="{TemplateBinding Foreground}" Width="0" Height="0"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
