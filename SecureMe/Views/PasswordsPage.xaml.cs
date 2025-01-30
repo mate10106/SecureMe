@@ -102,7 +102,6 @@ namespace SecureMe.Views
         {
             if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SecureMe", "passwords.dat")))
             {
-                // Hide Import Button, Show Password List
                 BtnImportPasswords.Visibility = Visibility.Collapsed;
                 PasswordListPanel.Visibility = Visibility.Visible;
 
@@ -116,7 +115,6 @@ namespace SecureMe.Views
             }
             else
             {
-                // Show Import Button if no passwords exist
                 BtnImportPasswords.Visibility = Visibility.Visible;
                 PasswordListPanel.Visibility = Visibility.Collapsed;
             }
@@ -124,41 +122,25 @@ namespace SecureMe.Views
 
         private void AddPasswordToUI(Passwords.PasswordEntry passwordEntry)
         {
-            StackPanel passwordItem = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(5) };
-
-            TextBlock title = new TextBlock
+            CheckBox passwordCheckBox = new CheckBox
             {
-                Text = passwordEntry.Title,
-                Foreground = Brushes.White,
-                FontSize = 16,
-                Width = 150
+                Content = passwordEntry.Title,
+                Style = (Style)FindResource("CustomCheckBoxStyle"), 
+                Tag = passwordEntry,
+                ToolTip = passwordEntry.Username,
+                Margin = new Thickness(5)
             };
 
-            TextBlock username = new TextBlock
+            Border passwordBorder = new Border
             {
-                Text = passwordEntry.Username,
-                Foreground = Brushes.White,
-                FontSize = 14,
-                Width = 150
+                Child = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Children = { passwordCheckBox }
+                }
             };
 
-            Button showPasswordButton = new Button
-            {
-                Content = "Show",
-                Width = 80,
-                Height = 30
-            };
-            showPasswordButton.Click += (s, e) =>
-            {
-                string decryptedPassword = SecureMe.Utilities.FileManager.DecryptData(passwordEntry.EncryptedPassword);
-                MessageBox.Show($"Password: {decryptedPassword}", "Decrypted Password", MessageBoxButton.OK, MessageBoxImage.Information);
-            };
-
-            passwordItem.Children.Add(title);
-            passwordItem.Children.Add(username);
-            passwordItem.Children.Add(showPasswordButton);
-
-            PasswordListPanel.Children.Add(passwordItem);
+            PasswordListPanel.Children.Add(passwordBorder);
         }
 
 

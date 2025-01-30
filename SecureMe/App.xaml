@@ -326,8 +326,8 @@
                             BorderBrush="Transparent"
                             BorderThickness="2"
                             CornerRadius="5"
-                            Width="1070"
-                            Height="40"
+                            Width="1090"
+                            Height="65"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left">
  
@@ -352,7 +352,7 @@
                                    Foreground="White"
                                    FontSize="12"
                                    FontWeight="Bold"
-                                   VerticalAlignment="Center"
+                                   VerticalAlignment="Top"
                                    HorizontalAlignment="Center"/>
                             </Border>
 
@@ -364,17 +364,15 @@
                                Text="{TemplateBinding ToolTip}"
                                Foreground="White"
                                FontSize="12"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,2,0"/>
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left"
+                               Margin="70,0,2,0"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
                                 <Setter TargetName="CheckBoxBorder" Property="Background" Value="#1E90FF" />
-                                <!-- Blue background when checked -->
                             </Trigger>
-                            <!-- Trigger for MouseOver State -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="CheckBoxBorder" Property="BorderBrush" Value="#1E90FF" />
                                 <Setter TargetName="AbbreviationCube" Property="Background" Value="#1C86EE" />
