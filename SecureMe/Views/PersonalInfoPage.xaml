@@ -5,17 +5,138 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SecureMe.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="750" d:DesignWidth="1103"
       FontFamily="Arial">
+
+    <!-- Background Gradient -->
     <Page.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#0F172A" Offset="0" />
             <GradientStop Color="#1E293B" Offset="1" />
         </LinearGradientBrush>
     </Page.Background>
-    <Grid>
-        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White">
-            PERSONAL INFO PAGE
-        </TextBlock>
+
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Text="Personal Information"
+                   Foreground="White"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0, 0, 0, 20"/>
+
+        <!-- Form Grid -->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Column -->
+            <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" Width="400">
+                <Border Style="{StaticResource InfoFieldStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="👤" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Full Name" Foreground="#94A3B8" FontSize="14"/>
+                            <TextBox Foreground="White" FontSize="18"
+                                         Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+    
+                <Border Style="{StaticResource InfoFieldStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="📞" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Phone" Foreground="#94A3B8" FontSize="14"/>
+                            <TextBox Foreground="White" FontSize="18"
+                                    BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource InfoFieldStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Height="44" Width="44">
+                            <TextBlock Text="🏢" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Company" Foreground="#94A3B8" FontSize="14"/>
+                            <TextBox  HorizontalAlignment="Left" Foreground="White" FontSize="18"
+                                        BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+
+            <!-- Right Column -->
+            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Width="400">
+                <Border Style="{StaticResource InfoFieldStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="📧" Foreground="Blue"  FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Email" Foreground="#94A3B8" FontSize="14"/>
+                            <TextBox  HorizontalAlignment="Left" Foreground="White" FontSize="18"
+                                     BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource InfoFieldStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="📍" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Address" Foreground="#94A3B8" FontSize="14"/>
+                            <TextBox  HorizontalAlignment="Left" Foreground="White" FontSize="18"
+                                     BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource InfoFieldStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="🌐" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Website" Foreground="#94A3B8" FontSize="14"/>
+                            <TextBox  HorizontalAlignment="Left" Foreground="White" FontSize="18"
+                                        BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>   
+            </StackPanel>
+        </Grid>
+
+        <Button Grid.Row="2" Content="Save" Style="{StaticResource AuthButton}" FontSize="22" Background="#2563EB" FontWeight="Bold" HorizontalAlignment="Center" Margin="20"/>
     </Grid>
 </Page>
