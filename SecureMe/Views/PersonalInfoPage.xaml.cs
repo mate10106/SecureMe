@@ -23,7 +23,22 @@ namespace SecureMe.Views
     {
         public PersonalInfoPage()
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            LoadPersonalInformation();
+        }
+        private void LoadPersonalInformation()
+        {
+            var personalInfo = PersonalInformationManager.LoadPersonalInformation();
+
+            if (personalInfo != null)
+            {
+                txtFullName.Text = personalInfo.Name ?? "";
+                txtEmail.Text = personalInfo.Email ?? "";
+                txtPhone.Text = personalInfo.Phone ?? "";
+                txtAddress.Text = personalInfo.Address ?? "";
+                txtCompany.Text = personalInfo.Company ?? "";
+                txtWebsite.Text = personalInfo.Website ?? "";
+            }
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)

@@ -427,20 +427,11 @@
                                 Height="43">
                                 <ScrollViewer x:Name="PART_ContentHost" />
                             </Border>
-                            <TextBlock x:Name="Placeholder"
-                                   Foreground="Gray"
-                                   Margin="10,0,10,0"
-                                   VerticalAlignment="Center"
-                                   IsHitTestVisible="False"
-                                   Visibility="Visible"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#0EA5E9" />
                                 <Setter TargetName="border" Property="BorderThickness" Value="2" />
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
