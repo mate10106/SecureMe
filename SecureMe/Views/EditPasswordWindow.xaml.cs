@@ -7,6 +7,7 @@ namespace SecureMe.Views
     public partial class EditPasswordWindow : Window
     {
         private Passwords.PasswordEntry _passwordEntry;
+        private bool isPasswordVisible = false;
 
         public EditPasswordWindow(Passwords.PasswordEntry passwordEntry)
         {
@@ -33,6 +34,24 @@ namespace SecureMe.Views
             MessageBox.Show("Password updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             this.Close();
+        }
+
+        private void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
+        {
+            isPasswordVisible = !isPasswordVisible;
+
+            if (isPasswordVisible)
+            {
+                txtPasswordVisible.Text = txtPassword.Password;
+                txtPasswordVisible.Visibility = Visibility.Visible;
+                txtPassword.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtPassword.Password = txtPasswordVisible.Text;
+                txtPassword.Visibility = Visibility.Visible;
+                txtPasswordVisible.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
