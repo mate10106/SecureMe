@@ -78,6 +78,9 @@
     <Compile Include="Views\CreateMasterPasswordPage.xaml.cs">
       <DependentUpon>CreateMasterPasswordPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditPasswordWindow.xaml.cs">
+      <DependentUpon>EditPasswordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateMasterPasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditPasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

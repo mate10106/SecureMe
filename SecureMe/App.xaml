@@ -321,53 +321,74 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="CheckBox">
                         <Grid>
+                            <!-- Main Border Container -->
                             <Border x:Name="CheckBoxBorder"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            BorderThickness="2"
-                            CornerRadius="5"
-                            Width="1090"
-                            Height="65"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left">
- 
-                                <Path x:Name="CheckMark"
-                              Data="M 0 5 L 5 10 L 12 0"
-                              Stroke="White"
-                              StrokeThickness="2"
-                              Visibility="Collapsed"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"/>
-                            </Border>
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="2"
+                        CornerRadius="5"
+                        Width="1090"
+                        Height="65"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left">
 
-                            <Border x:Name="AbbreviationCube"
-                            Background="#1E90FF"
-                            Width="24"
-                            Height="24"
-                            CornerRadius="4"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            Margin="30,0,10,0">
-                                <TextBlock Text="{TemplateBinding Tag}"
-                                   Foreground="White"
-                                   FontSize="12"
-                                   FontWeight="Bold"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Center"/>
-                            </Border>
+                                <Grid>
+                                    <!-- StackPanel to Arrange Elements Horizontally -->
+                                    <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Stretch"
+                                        Margin="10,0,10,0">
 
-                            <ContentPresenter x:Name="ContentPresenter"
-                                      Margin="70,0,0,0"
-                                      VerticalAlignment="Center"
-                                      HorizontalAlignment="Left"/>
-                            <TextBlock x:Name="DateText"
-                               Text="{TemplateBinding ToolTip}"
-                               Foreground="White"
-                               FontSize="12"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Left"
-                               Margin="70,0,2,0"/>
+                                        <!-- Icon Box (Left Side) -->
+                                        <Border x:Name="AbbreviationCube"
+                                    Background="#1E90FF"
+                                    Width="24"
+                                    Height="24"
+                                    CornerRadius="4"
+                                    VerticalAlignment="Center"
+                                    Margin="10,0,10,0">
+                                            <TextBlock Text="{TemplateBinding Tag}"
+                                        Foreground="White"
+                                        FontSize="12"
+                                        FontWeight="Bold"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                        </Border>
+
+                                        <!-- Centered Content -->
+                                        <TextBlock x:Name="ContentPresenter"
+                                    Text="{TemplateBinding Content}"
+                                    Foreground="White"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Width="900"/>
+
+                                        <!-- Tooltip (Username/Date) -->
+                                        <TextBlock x:Name="DateText"
+                                    Text="{TemplateBinding ToolTip}"
+                                    Foreground="White"
+                                    FontSize="12"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Margin="10,0,10,0"/>
+                                    </StackPanel>
+
+                                    <!-- Check Mark (Placed Separately) -->
+                                    <Path x:Name="CheckMark"
+                                Data="M 0 5 L 5 10 L 12 0"
+                                Stroke="White"
+                                StrokeThickness="2"
+                                Visibility="Collapsed"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right"
+                                Margin="10,0,10,0"/>
+                                </Grid>
+
+                            </Border>
                         </Grid>
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
@@ -377,16 +398,15 @@
                                 <Setter TargetName="CheckBoxBorder" Property="BorderBrush" Value="#1E90FF" />
                                 <Setter TargetName="AbbreviationCube" Property="Background" Value="#1C86EE" />
                             </Trigger>
-                       
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="CheckBoxBorder" Property="Background" Value="#1C86EE" />
-  
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
         <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
             <Setter Property="Width" Value="8"/>
             <Setter Property="Background" Value="Transparent"/>

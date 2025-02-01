@@ -78,5 +78,17 @@ namespace SecureMe.Models
                 SavePasswords(passwords);
             }
         }
+
+        public static void UpdatePasswords(Passwords.PasswordEntry updatedEntry)
+        {
+            List<Passwords.PasswordEntry> passwords = LoadPasswords();
+            int index = passwords.FindIndex(p => p.Title == updatedEntry.Title);
+
+            if (index != -1)
+            {
+                passwords[index] = updatedEntry;
+                SavePasswords(passwords);
+            }
+        }
     }
 }

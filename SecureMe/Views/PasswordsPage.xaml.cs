@@ -125,22 +125,85 @@ namespace SecureMe.Views
             CheckBox passwordCheckBox = new CheckBox
             {
                 Content = passwordEntry.Title,
-                Style = (Style)FindResource("CustomCheckBoxStyle"), 
-                Tag = passwordEntry,
-                ToolTip = passwordEntry.Username,
+                Style = (Style)FindResource("CustomCheckBoxStyle"),
+                Tag = GetAbbreviation(passwordEntry.Title),
+                ToolTip = GetTimeAgo(passwordEntry.LastUsed),
                 Margin = new Thickness(5)
+            };
+
+            Button editButton = new Button
+            {
+                Content = "Edit",
+                Width = 50,
+                Height = 25,
+                Margin = new Thickness(10, 0, 0, 0),
+                Tag = passwordEntry
+            };
+
+            editButton.Click += EditButton_Click;
+
+            StackPanel passwordPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                Children = { passwordCheckBox, editButton }
             };
 
             Border passwordBorder = new Border
             {
-                Child = new StackPanel
-                {
-                    Orientation = Orientation.Horizontal,
-                    Children = { passwordCheckBox }
-                }
+                Child = passwordPanel,
+                Margin = new Thickness(5)
             };
 
             PasswordListPanel.Children.Add(passwordBorder);
+        }
+
+
+        private string GetTimeAgo(DateTime lastUsed)
+        {
+            TimeSpan timeSince = DateTime.Now - lastUsed;
+
+            if (timeSince.TotalSeconds < 60)
+                return "Just now";
+            else if (timeSince.TotalMinutes < 60)
+                return $"{(int)timeSince.TotalMinutes} minutes ago";
+            else if (timeSince.TotalHours < 24)
+                return $"{(int)timeSince.TotalHours} hours ago";
+            else if (timeSince.TotalDays < 7)
+                return $"{(int)timeSince.TotalDays} days ago";
+            else if (timeSince.TotalDays < 30)
+                return $"{(int)(timeSince.TotalDays / 7)} weeks ago";
+            else if (timeSince.TotalDays < 365)
+                return $"{(int)(timeSince.TotalDays / 30)} months ago";
+            else
+                return $"{(int)(timeSince.TotalDays / 365)} years ago";
+        }
+
+        private string GetAbbreviation(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                return "N/A"; // Default if empty
+
+            string[] words = title.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (words.Length == 1)
+            {
+                return words[0].Length >= 2 ? words[0].Substring(0, 2).ToUpper() : words[0].ToUpper();
+            }
+
+            return (words[0][0].ToString() + words[1][0].ToString()).ToUpper();
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            if (clickedButton != null && clickedButton.Tag is Passwords.PasswordEntry passwordEntry)
+            {
+                EditPasswordWindow editWindow = new EditPasswordWindow(passwordEntry);
+                editWindow.ShowDialog();
+
+                // Reload passwords after editing
+                LoadPasswords();
+            }
         }
 
 

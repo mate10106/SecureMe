@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecureMe.Models
 {
-    internal class Passwords
+    public class Passwords
     {
         public class PasswordEntry
         {
