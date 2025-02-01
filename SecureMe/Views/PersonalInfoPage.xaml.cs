@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecureMe.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,23 @@ namespace SecureMe.Views
         public PersonalInfoPage()
         {
             InitializeComponent();
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            PersonalInformation personalInfo = new PersonalInformation
+            {
+                Name = string.IsNullOrWhiteSpace(txtFullName.Text) ? null : txtFullName.Text,
+                Email = string.IsNullOrWhiteSpace(txtEmail.Text) ? null : txtEmail.Text,
+                Phone = string.IsNullOrWhiteSpace(txtPhone.Text) ? null : txtAddress.Text,  
+                Address = string.IsNullOrWhiteSpace(txtAddress.Text) ? null : txtAddress.Text,
+                Company = string.IsNullOrWhiteSpace(txtCompany.Text) ? null : txtCompany.Text,
+                Website = string.IsNullOrWhiteSpace(txtWebsite.Text) ? null : txtWebsite.Text
+            };
+
+            PersonalInformationManager.SavePersonalInformation(personalInfo);
+
+            MessageBox.Show("Personal information saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

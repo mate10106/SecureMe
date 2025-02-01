@@ -7,8 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="1103"
       FontFamily="Arial">
-
-    <!-- Background Gradient -->
+    
     <Page.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#0F172A" Offset="0" />
@@ -23,7 +22,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
         <TextBlock Text="Personal Information"
                    Foreground="White"
                    FontSize="30"
@@ -31,14 +29,12 @@
                    HorizontalAlignment="Center"
                    Margin="0, 0, 0, 20"/>
 
-        <!-- Form Grid -->
         <Grid Grid.Row="1" Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
-            <!-- Left Column -->
+            
             <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" Width="400">
                 <Border Style="{StaticResource InfoFieldStyle}">
                     <Grid>
@@ -46,10 +42,10 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="👤" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Text="👤" Foreground="#0EA5E9" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="Full Name" Foreground="#94A3B8" FontSize="14"/>
-                            <TextBox Foreground="White" FontSize="18"
+                            <TextBox x:Name="txtFullName" Foreground="White" FontSize="18"
                                          Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
                         </StackPanel>
                     </Grid>
@@ -61,10 +57,10 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="📞" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Text="📞" Foreground="#0EA5E9" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="Phone" Foreground="#94A3B8" FontSize="14"/>
-                            <TextBox Foreground="White" FontSize="18"
+                            <TextBox x:Name="txtPhone" Foreground="White" FontSize="18"
                                     BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
                         </StackPanel>
                     </Grid>
@@ -77,18 +73,17 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Height="44" Width="44">
-                            <TextBlock Text="🏢" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Text="🏢" Foreground="#0EA5E9" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="Company" Foreground="#94A3B8" FontSize="14"/>
-                            <TextBox  HorizontalAlignment="Left" Foreground="White" FontSize="18"
+                            <TextBox x:Name="txtCompany" HorizontalAlignment="Left" Foreground="White" FontSize="18"
                                         BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
                         </StackPanel>
                     </Grid>
                 </Border>
             </StackPanel>
 
-            <!-- Right Column -->
             <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Width="400">
                 <Border Style="{StaticResource InfoFieldStyle}">
                     <Grid>
@@ -96,10 +91,10 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="📧" Foreground="Blue"  FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Text="📧" Foreground="#0EA5E9"  FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="Email" Foreground="#94A3B8" FontSize="14"/>
-                            <TextBox  HorizontalAlignment="Left" Foreground="White" FontSize="18"
+                            <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Foreground="White" FontSize="18"
                                      BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
                         </StackPanel>
                     </Grid>
@@ -111,10 +106,10 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="📍" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Text="📍" Foreground="#0EA5E9" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="Address" Foreground="#94A3B8" FontSize="14"/>
-                            <TextBox  HorizontalAlignment="Left" Foreground="White" FontSize="18"
+                            <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Foreground="White" FontSize="18"
                                      BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
                         </StackPanel>
                     </Grid>
@@ -126,10 +121,10 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="🌐" Foreground="Blue" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Text="🌐" Foreground="#0EA5E9" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="Website" Foreground="#94A3B8" FontSize="14"/>
-                            <TextBox  HorizontalAlignment="Left" Foreground="White" FontSize="18"
+                            <TextBox x:Name="txtWebsite" HorizontalAlignment="Left" Foreground="White" FontSize="18"
                                         BorderThickness="1" Margin="0,5,0,0" Style="{StaticResource PersonalInfoTextBox}"/>
                         </StackPanel>
                     </Grid>
@@ -137,6 +132,6 @@
             </StackPanel>
         </Grid>
 
-        <Button Grid.Row="2" Content="Save" Style="{StaticResource AuthButton}" FontSize="22" Background="#2563EB" FontWeight="Bold" HorizontalAlignment="Center" Margin="20"/>
+        <Button Click="BtnSave_Click" Grid.Row="2" Content="Save" Style="{StaticResource AuthButton}" FontSize="22" Background="#2563EB" FontWeight="Bold" HorizontalAlignment="Center" Margin="20"/>
     </Grid>
 </Page>
