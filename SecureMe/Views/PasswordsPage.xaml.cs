@@ -32,6 +32,7 @@ namespace SecureMe.Views
         private List<Passwords.PasswordEntry> allPasswords = new List<Passwords.PasswordEntry>();
         private int loadedCount = 0;
         private const int PageSize = 15;
+        private bool isLoading = false;
         private void BtnImportPasswords_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -194,7 +195,7 @@ namespace SecureMe.Views
         private string GetAbbreviation(string title)
         {
             if (string.IsNullOrWhiteSpace(title))
-                return "N/A"; // Default if empty
+                return "N/A";
 
             string[] words = title.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -228,24 +229,44 @@ namespace SecureMe.Views
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
 
-            if (scrollViewer != null && scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 50)
+            if (scrollViewer != null)
             {
-                LoadMorePasswords();
+                if (scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 10)
+                {
+                    LoadMorePasswords();
+                }
             }
         }
 
-        private void LoadMorePasswords()
+        private async void LoadMorePasswords()
         {
+            if (isLoading) return;
+            isLoading = true;
+
+            LoadingPanel.Visibility = Visibility.Visible;
+
+            await Task.Delay(750);
+
             var newPasswords = PasswordManager.LoadPasswords(loadedCount, PageSize);
 
-            if (newPasswords.Count == 0) return;
+            if (newPasswords.Count == 0)
+            {
+                isLoading = false;
+                LoadingPanel.Visibility = Visibility.Collapsed;
+                return;
+            }
 
             foreach (var password in newPasswords)
             {
                 AddPasswordToUI(password);
+                allPasswords.Add(password);
             }
 
             loadedCount += newPasswords.Count;
+
+            LoadingPanel.Visibility = Visibility.Collapsed;
+            isLoading = false;
         }
+
     }
 }
