@@ -319,25 +319,21 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="CheckBox">
                         <Grid>
-                            <!-- Main Border Container -->
                             <Border x:Name="CheckBoxBorder"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        BorderThickness="2"
-                        CornerRadius="5"
-                        Width="1090"
-                        Height="65"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Left">
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="2"
+                                    CornerRadius="5"
+                                    Width="1090"
+                                    Height="60"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
 
                                 <Grid>
-                                    <!-- StackPanel to Arrange Elements Horizontally -->
                                     <StackPanel Orientation="Horizontal"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Stretch"
                                         Margin="10,0,10,0">
-
-                                        <!-- Icon Box (Left Side) -->
                                         <Border x:Name="AbbreviationCube"
                                     Background="#1E90FF"
                                     Width="24"
@@ -391,10 +387,6 @@
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
                                 <Setter TargetName="CheckBoxBorder" Property="Background" Value="#1E90FF" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="CheckBoxBorder" Property="BorderBrush" Value="#1E90FF" />
-                                <Setter TargetName="AbbreviationCube" Property="Background" Value="#1C86EE" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="CheckBoxBorder" Property="Background" Value="#1C86EE" />
@@ -525,6 +517,39 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+        <Style x:Key="EditButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="ToolTip" Value="Edit"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="2" CornerRadius="5" Padding="5">
+                            <TextBlock Text="✏️" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1E90FF"/>
+                    <!-- Dodger Blue on hover -->
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="DarkBlue"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Application.Resources>
 </Application>

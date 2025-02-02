@@ -15,6 +15,10 @@ namespace SecureMe.Models
 
         public static List<Passwords.PasswordEntry> LoadPasswords()
         {
+            return LoadPasswords(0, int.MaxValue);
+        }
+        public static List<Passwords.PasswordEntry> LoadPasswords(int offset, int limit)
+        {
             try
             {
                 if (!File.Exists(passwordsFilePath))
@@ -24,7 +28,9 @@ namespace SecureMe.Models
                 }
                 string encryptedData = File.ReadAllText(passwordsFilePath);
                 string decryptedData = SecureMe.Utilities.FileManager.DecryptData(encryptedData);
-                return JsonConvert.DeserializeObject<List<Passwords.PasswordEntry>>(decryptedData);
+                List<Passwords.PasswordEntry> allPasswords = JsonConvert.DeserializeObject<List<Passwords.PasswordEntry>>(decryptedData);
+
+                return allPasswords.Skip(offset).Take(limit).ToList();
             }
             catch (Exception ex)
             {

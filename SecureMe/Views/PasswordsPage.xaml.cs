@@ -28,6 +28,10 @@ namespace SecureMe.Views
             InitializeComponent();
             LoadPasswords();
         }
+
+        private List<Passwords.PasswordEntry> allPasswords = new List<Passwords.PasswordEntry>();
+        private int loadedCount = 0;
+        private const int PageSize = 15;
         private void BtnImportPasswords_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -105,10 +109,11 @@ namespace SecureMe.Views
                 BtnImportPasswords.Visibility = Visibility.Collapsed;
                 PasswordListPanel.Visibility = Visibility.Visible;
 
-                List<Passwords.PasswordEntry> passwords = PasswordManager.LoadPasswords();
+                allPasswords = PasswordManager.LoadPasswords(0, PageSize);
+                loadedCount = allPasswords.Count;
 
                 PasswordListPanel.Children.Clear();
-                foreach (var password in passwords)
+                foreach (var password in allPasswords)
                 {
                     AddPasswordToUI(password);
                 }
@@ -118,45 +123,53 @@ namespace SecureMe.Views
                 BtnImportPasswords.Visibility = Visibility.Visible;
                 PasswordListPanel.Visibility = Visibility.Collapsed;
             }
+
+            PasswordListPanel.AddHandler(ScrollViewer.ScrollChangedEvent, new ScrollChangedEventHandler(PasswordListScroll));
         }
 
         private void AddPasswordToUI(Passwords.PasswordEntry passwordEntry)
         {
+            Border passwordBorder = new Border
+            {
+                BorderThickness = new Thickness(2),
+                BorderBrush = Brushes.Transparent, // Default: no border
+                CornerRadius = new CornerRadius(5),
+                Margin = new Thickness(5),
+                Padding = new Thickness(5) // Adds spacing inside the border
+            };
+
+            Grid passwordGrid = new Grid();
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); 
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); 
+
             CheckBox passwordCheckBox = new CheckBox
             {
                 Content = passwordEntry.Title,
                 Style = (Style)FindResource("CustomCheckBoxStyle"),
                 Tag = GetAbbreviation(passwordEntry.Title),
                 ToolTip = GetTimeAgo(passwordEntry.LastUsed),
-                Margin = new Thickness(5)
+                VerticalAlignment = VerticalAlignment.Center
             };
 
             Button editButton = new Button
             {
-                Content = "Edit",
-                Width = 50,
-                Height = 25,
-                Margin = new Thickness(10, 0, 0, 0),
+                Style = (Style)FindResource("EditButtonStyle"),
                 Tag = passwordEntry
             };
-
             editButton.Click += EditButton_Click;
 
-            StackPanel passwordPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                Children = { passwordCheckBox, editButton }
-            };
+            Grid.SetColumn(passwordCheckBox, 0);
+            Grid.SetColumn(editButton, 1);
+            passwordGrid.Children.Add(passwordCheckBox);
+            passwordGrid.Children.Add(editButton);
 
-            Border passwordBorder = new Border
-            {
-                Child = passwordPanel,
-                Margin = new Thickness(5)
-            };
+            passwordBorder.Child = passwordGrid;
+
+            passwordBorder.MouseEnter += (s, e) => passwordBorder.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#1E90FF");
+            passwordBorder.MouseLeave += (s, e) => passwordBorder.BorderBrush = Brushes.Transparent;
 
             PasswordListPanel.Children.Add(passwordBorder);
         }
-
 
         private string GetTimeAgo(DateTime lastUsed)
         {
@@ -201,7 +214,6 @@ namespace SecureMe.Views
                 EditPasswordWindow editWindow = new EditPasswordWindow(passwordEntry);
                 editWindow.ShowDialog();
 
-                // Reload passwords after editing
                 LoadPasswords();
             }
         }
@@ -210,6 +222,30 @@ namespace SecureMe.Views
         private void BtnAddPassword_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void PasswordListScroll(object sender, ScrollChangedEventArgs e)
+        {
+            ScrollViewer scrollViewer = sender as ScrollViewer;
+
+            if (scrollViewer != null && scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 50)
+            {
+                LoadMorePasswords();
+            }
+        }
+
+        private void LoadMorePasswords()
+        {
+            var newPasswords = PasswordManager.LoadPasswords(loadedCount, PageSize);
+
+            if (newPasswords.Count == 0) return;
+
+            foreach (var password in newPasswords)
+            {
+                AddPasswordToUI(password);
+            }
+
+            loadedCount += newPasswords.Count;
         }
     }
 }
