@@ -209,13 +209,26 @@ namespace SecureMe.Views
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            Button clickedButton = sender as Button;
-            if (clickedButton != null && clickedButton.Tag is Passwords.PasswordEntry passwordEntry)
+            if (sender is Button clickedButton && clickedButton.Tag is Passwords.PasswordEntry passwordEntry)
             {
+                // Save current scroll position
+                double scrollOffset = PasswordListScrollViewer.VerticalOffset;
+
                 EditPasswordWindow editWindow = new EditPasswordWindow(passwordEntry);
                 editWindow.ShowDialog();
 
-                LoadPasswords();
+                var updatedPassword = PasswordManager.LoadPasswords(0, int.MaxValue)
+                    .FirstOrDefault(p => p.Title == passwordEntry.Title);
+
+                if (updatedPassword != null)
+                {
+                    UpdatePasswordInUI(updatedPassword);
+                }
+
+                Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    PasswordListScrollViewer.ScrollToVerticalOffset(scrollOffset);
+                }, System.Windows.Threading.DispatcherPriority.Background);
             }
         }
 
@@ -249,24 +262,31 @@ namespace SecureMe.Views
 
             var newPasswords = PasswordManager.LoadPasswords(loadedCount, PageSize);
 
-            if (newPasswords.Count == 0)
+            if (newPasswords.Count > 0)
             {
-                isLoading = false;
-                LoadingPanel.Visibility = Visibility.Collapsed;
-                return;
+                foreach (var password in newPasswords)
+                {
+                    AddPasswordToUI(password);
+                }
+                loadedCount += newPasswords.Count;
             }
-
-            foreach (var password in newPasswords)
-            {
-                AddPasswordToUI(password);
-                allPasswords.Add(password);
-            }
-
-            loadedCount += newPasswords.Count;
 
             LoadingPanel.Visibility = Visibility.Collapsed;
             isLoading = false;
         }
 
+        private void UpdatePasswordInUI(Passwords.PasswordEntry updatedPassword)
+        {
+            foreach (UIElement element in PasswordListPanel.Children)
+            {
+                if (element is Border border && border.Child is Grid grid &&
+                    grid.Children.OfType<CheckBox>().FirstOrDefault() is CheckBox checkBox &&
+                    checkBox.Content.ToString() == updatedPassword.Title)
+                {
+                    checkBox.ToolTip = GetTimeAgo(updatedPassword.LastUsed);
+                    return; // Stop searching after finding the matching password
+                }
+            }
+        }
     }
 }
