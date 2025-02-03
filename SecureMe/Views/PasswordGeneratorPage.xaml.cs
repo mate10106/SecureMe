@@ -24,50 +24,48 @@ namespace SecureMe.Views
         public PasswordGeneratorPage()
         {
             InitializeComponent();
+            UpdatePassword(null, null);
         }
 
-        private void GeneratePassword_Click(object sender, RoutedEventArgs e)
+        private readonly Random _random = new Random();
+
+        private void UpdatePassword(object sender, RoutedEventArgs e)
         {
-            int length = (int)PasswordLengthSlider.Value;
-            bool useUppercase = UppercaseCheckBox.IsChecked ?? false;
-            bool useLowercase = LowercaseCheckBox.IsChecked ?? false;
-            bool useNumbers = NumbersCheckBox.IsChecked ?? false;
-            bool useSymbols = SymbolsCheckBox.IsChecked ?? false;
+            if (!IsLoaded) return;
 
-            string password = GenerateSecurePassword(length, useUppercase, useLowercase, useNumbers, useSymbols);
-            GeneratedPasswordTextBox.Text = password;
+            int length = (int)PasswordLengthSlider.Value;
+            bool includeUppercase = UppercaseCheckBox.IsChecked ?? false;
+            bool includeLowercase = LowercaseCheckBox.IsChecked ?? false;
+            bool includeNumbers = NumbersCheckBox.IsChecked ?? false;
+            bool includeSymbols = SymbolsCheckBox.IsChecked ?? false;
+
+            string newPassword = GeneratePassword(length, includeUppercase, includeLowercase, includeNumbers, includeSymbols);
+
+            GeneratedPasswordTextBox.Text = newPassword;
+
+            // Ensure the slider matches the actual password length
+            PasswordLengthSlider.Value = newPassword.Length;
+            PasswordLengthText.Text = newPassword.Length.ToString();
         }
 
-        private string GenerateSecurePassword(int length, bool useUpper, bool useLower, bool useNumbers, bool useSymbols)
+
+        private string GeneratePassword(int length, bool uppercase, bool lowercase, bool numbers, bool symbols)
         {
             const string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const string lowerChars = "abcdefghijklmnopqrstuvwxyz";
             const string numberChars = "0123456789";
-            const string symbolChars = "!@#$%^&*()-_=+[]{};:,.<>?";
+            const string symbolChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
 
-            string validChars = "";
-            if (useUpper) validChars += upperChars;
-            if (useLower) validChars += lowerChars;
-            if (useNumbers) validChars += numberChars;
-            if (useSymbols) validChars += symbolChars;
+            string charSet = "";
+            if (uppercase) charSet += upperChars;
+            if (lowercase) charSet += lowerChars;
+            if (numbers) charSet += numberChars;
+            if (symbols) charSet += symbolChars;
 
-            if (string.IsNullOrEmpty(validChars))
-                return "Select at least one option!";
+            if (charSet.Length == 0) return "Select at least one option!";
 
-            StringBuilder password = new StringBuilder();
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-            {
-                byte[] randomBytes = new byte[length];
-                rng.GetBytes(randomBytes);
-
-                for (int i = 0; i < length; i++)
-                {
-                    int index = randomBytes[i] % validChars.Length;
-                    password.Append(validChars[index]);
-                }
-            }
-
-            return password.ToString();
+            return new string(Enumerable.Repeat(charSet, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
 
         private void CopyPasswordToClipboard(object sender, RoutedEventArgs e)
@@ -76,12 +74,22 @@ namespace SecureMe.Views
             MessageBox.Show("Password copied to clipboard!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        private void GeneratedPasswordTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            PasswordLengthSlider.Value = GeneratedPasswordTextBox.Text.Length;
+        }
+
         private void PasswordLengthSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (PasswordLengthText != null)
             {
                 PasswordLengthText.Text = ((int)e.NewValue).ToString();
             }
+        }
+
+        private void ReloadPassword(object sender, RoutedEventArgs e)
+        {
+            UpdatePassword(null, null);
         }
     }
 }
