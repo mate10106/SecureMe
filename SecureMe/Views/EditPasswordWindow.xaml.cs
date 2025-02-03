@@ -53,5 +53,10 @@ namespace SecureMe.Views
                 txtPasswordVisible.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
     }
 }

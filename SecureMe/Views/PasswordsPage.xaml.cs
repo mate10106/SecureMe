@@ -211,7 +211,6 @@ namespace SecureMe.Views
         {
             if (sender is Button clickedButton && clickedButton.Tag is Passwords.PasswordEntry passwordEntry)
             {
-                // Save current scroll position
                 double scrollOffset = PasswordListScrollViewer.VerticalOffset;
 
                 EditPasswordWindow editWindow = new EditPasswordWindow(passwordEntry);
