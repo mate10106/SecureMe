@@ -21,11 +21,34 @@ namespace SecureMe.Views
     /// </summary>
     public partial class HomePage : Page
     {
+        private List<Passwords.PasswordEntry> _allPasswords;
         public HomePage()
         {
             InitializeComponent();
 
             MainContentFrame.Navigate(new AllItemsPage());
+
+            _allPasswords = PasswordManager.LoadPasswords();
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string query = SearchBox.Text.Trim().ToLower();
+
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                // Reset to show all items if search is empty
+                MainContentFrame.Navigate(new PasswordsPage());
+                return;
+            }
+
+            // Filter passwords based on the search query
+            var filteredPasswords = _allPasswords
+                .Where(p => p.Title.ToLower().Contains(query) || p.Username.ToLower().Contains(query))
+                .ToList();
+
+            // Navigate to PasswordsPage with filtered results
+            MainContentFrame.Navigate(new PasswordsPage(filteredPasswords));
         }
 
         private void BtnAllItems_Click(object sender, RoutedEventArgs e)

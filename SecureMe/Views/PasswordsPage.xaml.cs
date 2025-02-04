@@ -23,10 +23,18 @@ namespace SecureMe.Views
     /// </summary>
     public partial class PasswordsPage : Page
     {
-        public PasswordsPage()
+        public PasswordsPage(List<Passwords.PasswordEntry> filteredPasswords = null)
         {
             InitializeComponent();
             LoadPasswords();
+
+            PasswordListPanel.Children.Clear();
+            var passwordsToShow = filteredPasswords ?? PasswordManager.LoadPasswords();
+
+            foreach (var password in passwordsToShow)
+            {
+                AddPasswordToUI(password);
+            }
         }
 
         private List<Passwords.PasswordEntry> allPasswords = new List<Passwords.PasswordEntry>();
