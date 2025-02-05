@@ -26,14 +26,25 @@ namespace SecureMe.Views
         public PasswordsPage(List<Passwords.PasswordEntry> filteredPasswords = null)
         {
             InitializeComponent();
-            LoadPasswords();
 
-            PasswordListPanel.Children.Clear();
-            var passwordsToShow = filteredPasswords ?? PasswordManager.LoadPasswords();
-
-            foreach (var password in passwordsToShow)
+            if (filteredPasswords != null)
             {
-                AddPasswordToUI(password);
+                isSearchMode = true;
+                allPasswords = filteredPasswords;
+                loadedCount = filteredPasswords.Count;
+
+                PasswordListPanel.Children.Clear();
+                foreach (var password in filteredPasswords)
+                {
+                    AddPasswordToUI(password);
+                }
+
+                BtnImportPasswords.Visibility = Visibility.Collapsed;
+                PasswordListPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                LoadPasswords();
             }
         }
 
@@ -41,6 +52,7 @@ namespace SecureMe.Views
         private int loadedCount = 0;
         private const int PageSize = 15;
         private bool isLoading = false;
+        private bool isSearchMode = false;
         private void BtnImportPasswords_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -148,8 +160,8 @@ namespace SecureMe.Views
             };
 
             Grid passwordGrid = new Grid();
-            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); 
-            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); 
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
             CheckBox passwordCheckBox = new CheckBox
             {
@@ -247,6 +259,8 @@ namespace SecureMe.Views
 
         private void PasswordListScroll(object sender, ScrollChangedEventArgs e)
         {
+            if (isSearchMode) return;
+
             ScrollViewer scrollViewer = sender as ScrollViewer;
 
             if (scrollViewer != null)

@@ -26,6 +26,7 @@ namespace SecureMe.Models
                     Console.WriteLine($"Passwords file does not exist at: {passwordsFilePath}");
                     return new List<Passwords.PasswordEntry>();
                 }
+
                 string encryptedData = File.ReadAllText(passwordsFilePath);
                 string decryptedData = SecureMe.Utilities.FileManager.DecryptData(encryptedData);
                 List<Passwords.PasswordEntry> allPasswords = JsonConvert.DeserializeObject<List<Passwords.PasswordEntry>>(decryptedData);
