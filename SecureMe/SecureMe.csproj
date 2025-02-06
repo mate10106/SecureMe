@@ -66,6 +66,7 @@
     <Compile Include="Models\UserManager.cs" />
     <Compile Include="Utilities\EncryptionHelper.cs" />
     <Compile Include="Utilities\FileManager.cs" />
+    <Compile Include="Utilities\PasswordAnalysisHelper.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
