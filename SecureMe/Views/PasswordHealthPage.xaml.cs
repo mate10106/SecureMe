@@ -98,8 +98,8 @@ namespace SecureMe.Views
                 };
 
                 // Hover effect
-                border.MouseEnter += (s, e) => border.BorderBrush = Brushes.Gray; // Light gray border on hover
-                border.MouseLeave += (s, e) => border.BorderBrush = Brushes.Transparent; // Remove border on leave
+                border.MouseEnter += (s, e) => border.BorderBrush = Brushes.Gray;
+                border.MouseLeave += (s, e) => border.BorderBrush = Brushes.Transparent;
 
                 border.Child = grid;
                 AnalysisPanel.Children.Add(border);
@@ -108,7 +108,7 @@ namespace SecureMe.Views
                 var line = new Rectangle
                 {
                     Height = 1,
-                    Fill = new SolidColorBrush(Color.FromRgb(50, 50, 50)), // Dark gray line
+                    Fill = new SolidColorBrush(Color.FromRgb(50, 50, 50)),
                     Margin = new Thickness(5, 10, 5, 10)
                 };
                 AnalysisPanel.Children.Add(line);

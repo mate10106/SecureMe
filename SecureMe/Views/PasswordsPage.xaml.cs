@@ -153,10 +153,10 @@ namespace SecureMe.Views
             Border passwordBorder = new Border
             {
                 BorderThickness = new Thickness(2),
-                BorderBrush = Brushes.Transparent, // Default: no border
+                BorderBrush = Brushes.Transparent,
                 CornerRadius = new CornerRadius(5),
                 Margin = new Thickness(5),
-                Padding = new Thickness(5) // Adds spacing inside the border
+                Padding = new Thickness(5)
             };
 
             Grid passwordGrid = new Grid();
@@ -171,6 +171,9 @@ namespace SecureMe.Views
                 ToolTip = GetTimeAgo(passwordEntry.LastUsed),
                 VerticalAlignment = VerticalAlignment.Center
             };
+
+            passwordCheckBox.Checked += PasswordCheckBox_Checked;
+            passwordCheckBox.Unchecked += PasswordCheckBox_Unchecked;
 
             Button editButton = new Button
             {
@@ -305,9 +308,65 @@ namespace SecureMe.Views
                     checkBox.Content.ToString() == updatedPassword.Title)
                 {
                     checkBox.ToolTip = GetTimeAgo(updatedPassword.LastUsed);
-                    return; // Stop searching after finding the matching password
+                    return; 
                 }
             }
+        }
+
+        private void CheckAllBox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetAllCheckboxes(true);
+        }
+
+        private void CheckAllBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetAllCheckboxes(false);
+        }
+
+        private void SetAllCheckboxes(bool isChecked)
+        {
+            int count = 0;
+
+            foreach (UIElement element in PasswordListPanel.Children)
+            {
+                if (element is Border border && border.Child is Grid grid)
+                {
+                    CheckBox checkBox = grid.Children.OfType<CheckBox>().FirstOrDefault();
+                    if (checkBox != null)
+                    {
+                        checkBox.IsChecked = isChecked;
+                        count += isChecked ? 1 : 0;
+                    }
+                }
+            }
+
+            CheckedCountText.Text = $"({count} selected)";
+        }
+        private void PasswordCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateCheckedCount();
+        }
+
+        private void PasswordCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateCheckedCount();
+        }
+
+        private void UpdateCheckedCount()
+        {
+            int count = PasswordListPanel.Children.OfType<Border>()
+                .Select(border => border.Child as Grid)
+                .SelectMany(grid => grid.Children.OfType<CheckBox>())
+                .Count(cb => cb.IsChecked == true);
+
+            CheckedCountText.Text = $"({count} selected)";
+
+            // Update Select All checkbox state
+            CheckAllBox.Checked -= CheckAllBox_Checked;
+            CheckAllBox.Unchecked -= CheckAllBox_Unchecked;
+            CheckAllBox.IsChecked = count == PasswordListPanel.Children.Count;
+            CheckAllBox.Checked += CheckAllBox_Checked;
+            CheckAllBox.Unchecked += CheckAllBox_Unchecked;
         }
     }
 }
