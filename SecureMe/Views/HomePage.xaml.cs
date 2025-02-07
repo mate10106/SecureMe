@@ -78,6 +78,10 @@ namespace SecureMe.Views
         {
             MainContentFrame.Navigate(new PasswordHealthPage());
         }
+        private void BtnSecureNotes_Click(object sender, RoutedEventArgs e)
+        {
+            MainContentFrame.Navigate(new SecureNotesPage());
+        }
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -97,5 +101,6 @@ namespace SecureMe.Views
             }
 
         }
+
     }
 }
