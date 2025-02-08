@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecureMe.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace SecureMe.Views
     /// </summary>
     public partial class AddSecureNotes : Window
     {
+        public SecureNotes NewNote { get; private set; }
         public AddSecureNotes()
         {
             InitializeComponent();
@@ -27,6 +29,15 @@ namespace SecureMe.Views
         private void SaveSecureNote_Click(object sender, RoutedEventArgs e)
         {
 
+            //NewNote = new SecureNotes
+            //{
+            //    Title = TitleTextBox.Text,
+            //    SecuredNotes = ContentTextBox.Text,
+            //    CreatedNotes = DateTime.Now
+            //};
+
+            //SecureNotesManager.AddSecureNote(NewNote);
+            //DialogResult = true;
         }
     }
 }

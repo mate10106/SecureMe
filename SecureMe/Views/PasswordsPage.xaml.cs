@@ -67,7 +67,9 @@ namespace SecureMe.Views
 
                 try
                 {
+                    // Lists for both Passwords and Secure Notes
                     List<Passwords.PasswordEntry> importedPasswords = new List<Passwords.PasswordEntry>();
+                    List<SecureNotes> importedSecureNotes = new List<SecureNotes>();
 
                     string[] lines = File.ReadAllLines(filePath);
                     if (lines.Length < 2)
@@ -81,6 +83,7 @@ namespace SecureMe.Views
                     int usernameIndex = Array.IndexOf(headers, "username");
                     int passwordIndex = Array.IndexOf(headers, "password");
                     int urlIndex = Array.IndexOf(headers, "url");
+                    int noteIndex = Array.IndexOf(headers, "note"); // Added note index
 
                     if (nameIndex == -1 || usernameIndex == -1 || passwordIndex == -1)
                     {
@@ -88,32 +91,54 @@ namespace SecureMe.Views
                         return;
                     }
 
+                    // Process each row
                     for (int i = 1; i < lines.Length; i++)
                     {
                         string[] fields = lines[i].Split(',');
+                        if (fields.Length < 3) continue;  // Skip incomplete rows
 
-                        if (fields.Length < 3) continue;
-
-                        var passwordEntry = new Passwords.PasswordEntry
+                        // Check if the password field is empty or whitespace.
+                        if (string.IsNullOrWhiteSpace(fields[passwordIndex].Trim()))
                         {
-                            Title = fields[nameIndex].Trim(),
-                            Username = fields[usernameIndex].Trim(),
-                            EncryptedPassword = SecureMe.Utilities.FileManager.EncryptData(fields[passwordIndex].Trim()),
-                            URL = urlIndex != -1 ? fields[urlIndex].Trim() : "",
-                            LastUsed = DateTime.Now
-                        };
-
-                        importedPasswords.Add(passwordEntry);
+                            // Treat as a secure note.
+                            var secureNote = new SecureNotes
+                            {
+                                Title = fields[nameIndex].Trim(),
+                                // Use the "note" field for secure note content.
+                                SecuredNotes = noteIndex != -1 ? fields[noteIndex].Trim() : string.Empty,
+                                CreatedNotes = DateTime.Now
+                            };
+                            importedSecureNotes.Add(secureNote);
+                        }
+                        else
+                        {
+                            // Create a regular password entry.
+                            var passwordEntry = new Passwords.PasswordEntry
+                            {
+                                Title = fields[nameIndex].Trim(),
+                                Username = fields[usernameIndex].Trim(),
+                                EncryptedPassword = SecureMe.Utilities.FileManager.EncryptData(fields[passwordIndex].Trim()),
+                                URL = urlIndex != -1 ? fields[urlIndex].Trim() : "",
+                                LastUsed = DateTime.Now
+                            };
+                            importedPasswords.Add(passwordEntry);
+                        }
                     }
 
+                    // Save the imported items separately.
                     if (importedPasswords.Any())
                     {
                         PasswordManager.SavePasswords(importedPasswords);
                         MessageBox.Show("Passwords imported successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                    else
+                    if (importedSecureNotes.Any())
                     {
-                        MessageBox.Show("No valid passwords found in the file.", "Import Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        SecureNotesManager.SaveSecureNotes(importedSecureNotes);
+                        MessageBox.Show("Secure notes imported successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    if (!importedPasswords.Any() && !importedSecureNotes.Any())
+                    {
+                        MessageBox.Show("No valid entries found in the file.", "Import Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 catch (Exception ex)

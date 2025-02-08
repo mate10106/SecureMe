@@ -62,6 +62,8 @@
     <Compile Include="Models\Passwords.cs" />
     <Compile Include="Models\PersonalInformation.cs" />
     <Compile Include="Models\PersonalInformationManager.cs" />
+    <Compile Include="Models\SecureNotes.cs" />
+    <Compile Include="Models\SecureNotesManager.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserManager.cs" />
     <Compile Include="Utilities\EncryptionHelper.cs" />
