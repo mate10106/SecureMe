@@ -29,15 +29,15 @@ namespace SecureMe.Views
         private void SaveSecureNote_Click(object sender, RoutedEventArgs e)
         {
 
-            //NewNote = new SecureNotes
-            //{
-            //    Title = TitleTextBox.Text,
-            //    SecuredNotes = ContentTextBox.Text,
-            //    CreatedNotes = DateTime.Now
-            //};
+            NewNote = new SecureNotes
+            {
+                Title = txtTitle.Text,
+                SecuredNotes = txtSecureNote.Text,
+                CreatedNotes = DateTime.Now
+            };
 
-            //SecureNotesManager.AddSecureNote(NewNote);
-            //DialogResult = true;
+            SecureNotesManager.AddSecureNote(NewNote);
+            DialogResult = true;
         }
     }
 }

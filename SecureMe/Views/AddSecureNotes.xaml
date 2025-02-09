@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="Add Secure Note"
         Height="450" Width="600"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
         Background="#0F172A" Foreground="White" FontFamily="Arial">
 
     <Grid Margin="20">
@@ -19,7 +21,7 @@
 
         <Label Grid.Row="0" Content="Title" FontSize="17" Foreground="White" FontWeight="SemiBold"/>
         <Border Background="#1E293B" CornerRadius="7" Width="560" Padding="4" Margin="0,28,0,0">
-            <TextBox x:Name="txtTitle" FontSize="16" Foreground="White"
+            <TextBox x:Name="txtTitle" FontSize="16" CaretBrush="White"  Foreground="White"
                      Background="Transparent" BorderThickness="0"
                      Height="30" Padding="5" Width="540"/>
         </Border>
@@ -28,7 +30,7 @@
         <Border Grid.Row="2" Background="#1E293B" CornerRadius="10" Padding="10" Margin="0,33,0,0">
             <StackPanel>
                 <TextBox x:Name="txtSecureNote" AcceptsReturn="True" TextWrapping="Wrap"
-                         FontSize="16" Height="240" Foreground="White" Background="Transparent"
+                         FontSize="16" Height="240" Foreground="White" CaretBrush="White" Background="Transparent"
                          BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
             </StackPanel>
         </Border>

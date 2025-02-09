@@ -78,5 +78,19 @@ namespace SecureMe.Views
                     (n.SecuredNotes?.ToLower().Contains(searchQuery) ?? false)
                   ).ToList();
         }
+
+        private void DeleteNote_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button deleteButton && deleteButton.Tag is SecureNotes selectedNote)
+            {
+                var result = MessageBox.Show($"Are you sure you want to delete '{selectedNote.Title}'?",
+                                             "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SecureNotesManager.RemoveSecureNote(selectedNote);
+                    LoadSecureNotes();
+                }
+            }
+        }
     }
 }

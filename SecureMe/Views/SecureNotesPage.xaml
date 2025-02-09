@@ -30,13 +30,13 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Foreground="White" VerticalAlignment="Center" FontWeight="Bold" FontSize="20">
-                    Personal Journal
+                    Secure Notes
                 </TextBlock>
             </Grid>
         </Border>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="310" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
@@ -51,8 +51,8 @@
                     <!-- Search & New Note -->
                     <Border Grid.Row="0" BorderBrush="#334155" BorderThickness="0,0,0,1" Margin="0,0,0,10">
                         <StackPanel Margin="10">
-                            <TextBox x:Name="SearchBox" Style="{StaticResource RoundedSearchBar}" FontSize="16" Foreground="White" />
-                            <Button Content="+ New Note" Style="{StaticResource AuthButton}" Width="220" FontSize="16" Margin="0,10" Click="OpenAddSecureNotes_Click"/>
+                            <TextBox x:Name="SearchBox" Style="{StaticResource RoundedSearchBarForSecureNotes}" FontSize="16" Foreground="White" CaretBrush="White"/>
+                            <Button Content="+ New Note" Style="{StaticResource AuthButton}" Width="290" FontSize="17" Margin="0,10" Click="OpenAddSecureNotes_Click"/>
                         </StackPanel>
                     </Border>
 
@@ -60,26 +60,45 @@
                     <ListBox x:Name="NotesList" Grid.Row="1" Background="Transparent" BorderThickness="0">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Border BorderBrush="#334155" BorderThickness="0,0,0,1" Padding="10" Margin="0,5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="📄" Foreground="#0EA5E9" FontSize="18" 
-                             VerticalAlignment="Center" Margin="5,0"/>
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Title}" Foreground="White" 
-                                 FontSize="16" FontWeight="Bold"/>
-                                            <TextBlock Text="{Binding Preview}" Foreground="Gray" 
-                                 FontSize="14"/>
+                                <Border BorderBrush="#1E293B" BorderThickness="0,0,0,1"
+                                        Background="#111827" Padding="12" Margin="5"
+                                        CornerRadius="10">  
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="🔒" Foreground="Gray" FontSize="14"/>
-                                                <TextBlock Text="{Binding FormattedDate}" Foreground="Gray" 
-                                     FontSize="14" Margin="5,0"/>
+                                                <TextBlock Text="📄" Foreground="#0EA5E9" FontSize="18" Margin="5,0"/>
+                                                <TextBlock Text="{Binding Title}" Foreground="White" 
+                                       FontSize="16" FontWeight="Bold"/>
                                             </StackPanel>
+                                            <TextBlock Text="🔒" Foreground="Gray" FontSize="16"/>
+                                        </StackPanel>
+
+                                        <!-- Note Preview -->
+                                        <TextBlock Text="{Binding Preview}" Foreground="Gray"
+                               FontSize="14" TextWrapping="Wrap" Margin="0,3"/>
+
+                                        <!-- Tags & Date -->
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal">
+                                                <ItemsControl ItemsSource="{Binding Tags}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border Background="#374151" Padding="5,2"
+                                                CornerRadius="5" Margin="2">
+                                                                <TextBlock Text="{Binding}" Foreground="White" FontSize="12"/>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding FormattedDate}" Foreground="Gray" FontSize="14"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+
                 </Grid>
             </Border>
 

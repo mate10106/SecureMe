@@ -64,13 +64,6 @@ namespace SecureMe.Models
             SaveSecureNotes(notes);
         }
 
-        public static void RemoveSecureNote(SecureNotes note)
-        {
-            List<SecureNotes> notes = LoadSecureNotes();
-            notes.Remove(note);
-            SaveSecureNotes(notes);
-        }
-
         public static void UpdateSecureNote(SecureNotes note)
         {
             List<SecureNotes> notes = LoadSecureNotes();
@@ -78,6 +71,18 @@ namespace SecureMe.Models
             if (index != -1)
             {
                 notes[index] = note;
+                SaveSecureNotes(notes);
+            }
+        }
+
+        public static void RemoveSecureNote(SecureNotes note)
+        {
+            List<SecureNotes> notes = LoadSecureNotes();
+            var noteToRemove = notes.FirstOrDefault(n => n.Title == note.Title && n.SecuredNotes == note.SecuredNotes);
+
+            if (noteToRemove != null)
+            {
+                notes.Remove(noteToRemove);
                 SaveSecureNotes(notes);
             }
         }
