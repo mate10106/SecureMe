@@ -644,7 +644,6 @@
                                 Margin="0, 10"
                                 Padding="5"
                                 Width="290" Height="36">
-                                <ScrollViewer x:Name="PART_ContentHost" />
                             </Border>
                             <TextBlock x:Name="Placeholder"
                                    Text="Search"

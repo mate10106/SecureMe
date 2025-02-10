@@ -51,6 +51,8 @@ namespace SecureMe.Views
         {
             if (NotesList.SelectedItem is SecureNotes selectedNote)
             {
+                DataContext = selectedNote;
+
                 NoteContent.Text = selectedNote.SecuredNotes;
                 NoteContent.IsReadOnly = false;
                 NoteContent.Background = Brushes.Transparent;
