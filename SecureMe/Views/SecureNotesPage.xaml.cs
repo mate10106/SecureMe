@@ -52,12 +52,22 @@ namespace SecureMe.Views
             if (NotesList.SelectedItem is SecureNotes selectedNote)
             {
                 DataContext = selectedNote;
-
                 NoteContent.Text = selectedNote.SecuredNotes;
                 NoteContent.IsReadOnly = false;
                 NoteContent.Background = Brushes.Transparent;
+
+                PlaceholderText.Visibility = Visibility.Collapsed;
+                SelectNoteHint.Visibility = Visibility.Collapsed;
+                NoteContent.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PlaceholderText.Visibility = Visibility.Visible;
+                SelectNoteHint.Visibility = Visibility.Visible;
+                NoteContent.Visibility = Visibility.Collapsed;
             }
         }
+
 
         private void OpenAddSecureNotes_Click(object sender, RoutedEventArgs e)
         {
