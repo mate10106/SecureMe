@@ -57,12 +57,42 @@
                     </Border>
 
                     <!-- Notes List -->
-                    <ListBox x:Name="NotesList" Grid.Row="1" Background="Transparent" BorderThickness="0"  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <ListBox x:Name="NotesList" Grid.Row="1" Cursor="Hand" Background="Transparent" BorderThickness="0"  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Background" Value="#111827"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#1E293B"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#1E293B"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
+                                <!-- Remove Background from this Border -->
                                 <Border BorderBrush="#1E293B" BorderThickness="0,0,0,1"
-                                        Background="#111827" Width="335" Height="100" Cursor="Hand">
+                    Width="335" Height="100" Cursor="Hand">
                                     <StackPanel Height="100">
+                                        <!-- Rest of your DataTemplate content remains the same -->
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
@@ -71,7 +101,7 @@
                                             <StackPanel Orientation="Horizontal" Grid.Column="0">
                                                 <TextBlock Text="📄" Foreground="#0EA5E9" FontSize="18" Margin="2,0" VerticalAlignment="Center"/>
                                                 <TextBlock Text="{Binding Title}" Foreground="White" 
-                                                           FontSize="16" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                       FontSize="16" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center"/>
                                             </StackPanel>
                                             <TextBlock Text="🔒" Foreground="#0EA5E9" FontSize="16" Grid.Column="1" HorizontalAlignment="Right" Margin="10"/>
                                         </Grid>
@@ -86,7 +116,7 @@
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
                                                             <Border Background="#374151" Padding="5,2"
-                                                                    CornerRadius="5" Margin="2">
+                                                CornerRadius="5" Margin="2">
                                                                 <TextBlock Text="{Binding}" Foreground="White" FontSize="12"/>
                                                             </Border>
                                                         </DataTemplate>
@@ -98,7 +128,6 @@
                                             </StackPanel>
                                             <Button Content="🗑" Tag="{Binding}" Click="DeleteNote_Click" Style="{StaticResource DeleteButtonForSN}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1"/>
                                         </Grid>
-
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
