@@ -320,66 +320,32 @@
                     <ControlTemplate TargetType="CheckBox">
                         <Grid>
                             <Border x:Name="CheckBoxBorder"
-                                    Background="Transparent"
-                                    BorderBrush="Transparent"
-                                    BorderThickness="2"
-                                    CornerRadius="5"
-                                    Width="1090"
-                                    Height="60"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Left">
-
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="2"
+                            CornerRadius="5"
+                            Width="40"
+                            Height="40"
+                            VerticalAlignment="Center">
                                 <Grid>
-                                    <StackPanel Orientation="Horizontal"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Stretch"
-                                        Margin="10,0,10,0">
-                                        <Border x:Name="AbbreviationCube"
+                                    <Border x:Name="AbbreviationCube"
                                     Background="#1E90FF"
                                     Width="24"
                                     Height="24"
                                     CornerRadius="4"
                                     VerticalAlignment="Center"
-                                    Margin="10,0,10,0">
-                                            <TextBlock Text="{TemplateBinding Tag}"
-                                        Foreground="White"
-                                        FontSize="12"
-                                        FontWeight="Bold"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"/>
-                                        </Border>
-
-                                        <!-- Centered Content -->
-                                        <TextBlock x:Name="ContentPresenter"
-                                    Text="{TemplateBinding Content}"
-                                    Foreground="White"
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    Width="900"/>
-
-                                        <!-- Tooltip (Username/Date) -->
-                                        <TextBlock x:Name="DateText"
-                                    Text="{TemplateBinding ToolTip}"
-                                    Foreground="White"
-                                    FontSize="12"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Right"
-                                    Margin="10,0,10,0"/>
-                                    </StackPanel>
-
-                                    <!-- Check Mark (Placed Separately) -->
+                                    HorizontalAlignment="Center">
+                                        <TextBlock Text="{TemplateBinding Tag}"
+                                           Foreground="White"
+                                           FontSize="12"
+                                           FontWeight="Bold"/>
+                                    </Border>
                                     <Path x:Name="CheckMark"
-                                Data="M 0 5 L 5 10 L 12 0"
-                                Stroke="White"
-                                StrokeThickness="2"
-                                Visibility="Collapsed"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Right"
-                                Margin="10,0,10,0"/>
+                                  Data="M 0 5 L 5 10 L 12 0"
+                                  Stroke="White"
+                                  StrokeThickness="2"
+                                  Visibility="Collapsed"/>
                                 </Grid>
-
                             </Border>
                         </Grid>
 
@@ -700,5 +666,41 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="TransparentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent" BorderBrush="Transparent">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CopyButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent">
+                            <Path Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"
+                          Fill="White"
+                          Stretch="Uniform"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>    
     </Application.Resources>
 </Application>

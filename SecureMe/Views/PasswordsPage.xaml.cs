@@ -52,7 +52,7 @@ namespace SecureMe.Views
         private int loadedCount = 0;
         private const int PageSize = 15;
         private bool isLoading = false;
-        private bool isSearchMode = false;
+        private readonly bool isSearchMode = false;
         private void BtnImportPasswords_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -185,32 +185,78 @@ namespace SecureMe.Views
             };
 
             Grid passwordGrid = new Grid();
-            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // CheckBox
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Title
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Edit
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Copy
 
             CheckBox passwordCheckBox = new CheckBox
             {
-                Content = passwordEntry.Title,
                 Style = (Style)FindResource("CustomCheckBoxStyle"),
                 Tag = GetAbbreviation(passwordEntry.Title),
-                ToolTip = GetTimeAgo(passwordEntry.LastUsed),
-                VerticalAlignment = VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(5)
             };
-
             passwordCheckBox.Checked += PasswordCheckBox_Checked;
             passwordCheckBox.Unchecked += PasswordCheckBox_Unchecked;
 
+            // Title Button with TimeAgo
+            Button titleButton = new Button
+            {
+                Content = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Children =
+            {
+                new TextBlock
+                {
+                    Text = passwordEntry.Title,
+                    Foreground = Brushes.White,
+                    FontSize = 16,
+                    FontWeight = FontWeights.Bold,
+                    Margin = new Thickness(10, 0, 0, 0)
+                },
+                new TextBlock
+                {
+                    Text = GetTimeAgo(passwordEntry.LastUsed),
+                    Foreground = Brushes.Gray,
+                    FontSize = 12,
+                    Margin = new Thickness(10, 0, 0, 0)
+                }
+            }
+                },
+                Style = (Style)FindResource("TransparentButtonStyle"),
+                Tag = passwordEntry
+            };
+            titleButton.Click += TitleButton_Click;
+
+            // Edit Button
             Button editButton = new Button
             {
                 Style = (Style)FindResource("EditButtonStyle"),
-                Tag = passwordEntry
+                Tag = passwordEntry,
+                Margin = new Thickness(5)
             };
             editButton.Click += EditButton_Click;
 
+            // Copy Button
+            Button copyButton = new Button
+            {
+                Style = (Style)FindResource("CopyButtonStyle"),
+                Tag = passwordEntry,
+                Margin = new Thickness(5)
+            };
+            copyButton.Click += CopyButton_Click;
+
             Grid.SetColumn(passwordCheckBox, 0);
-            Grid.SetColumn(editButton, 1);
+            Grid.SetColumn(titleButton, 1);
+            Grid.SetColumn(editButton, 2);
+            Grid.SetColumn(copyButton, 3);
+
             passwordGrid.Children.Add(passwordCheckBox);
+            passwordGrid.Children.Add(titleButton);
             passwordGrid.Children.Add(editButton);
+            passwordGrid.Children.Add(copyButton);
 
             passwordBorder.Child = passwordGrid;
 
@@ -328,13 +374,42 @@ namespace SecureMe.Views
         {
             foreach (UIElement element in PasswordListPanel.Children)
             {
-                if (element is Border border && border.Child is Grid grid &&
-                    grid.Children.OfType<CheckBox>().FirstOrDefault() is CheckBox checkBox &&
-                    checkBox.Content.ToString() == updatedPassword.Title)
+                if (element is Border border && border.Child is Grid grid)
                 {
-                    checkBox.ToolTip = GetTimeAgo(updatedPassword.LastUsed);
-                    return; 
+                    var titleButton = grid.Children.OfType<Button>().FirstOrDefault(b => Grid.GetColumn(b) == 1);
+                    if (titleButton?.Tag is Passwords.PasswordEntry entry && entry.Title == updatedPassword.Title)
+                    {
+                        var stackPanel = titleButton.Content as StackPanel;
+                        var timeTextBlock = stackPanel?.Children.OfType<TextBlock>().LastOrDefault();
+                        if (timeTextBlock != null)
+                        {
+                            timeTextBlock.Text = GetTimeAgo(updatedPassword.LastUsed);
+                        }
+                    }
                 }
+            }
+        }
+
+        private void TitleButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is Passwords.PasswordEntry passwordEntry)
+            {
+                passwordEntry.LastUsed = DateTime.Now;
+                PasswordManager.UpdatePassword(passwordEntry);
+                UpdatePasswordInUI(passwordEntry);
+
+                var detailsWindow = new DetailsPasswordWindow(passwordEntry);
+                detailsWindow.Show();
+            }
+        }
+
+        private void CopyButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is Passwords.PasswordEntry passwordEntry)
+            {
+                string decryptedPassword = SecureMe.Utilities.FileManager.DecryptData(passwordEntry.EncryptedPassword);
+                Clipboard.SetText(decryptedPassword);
+                // Optional: Show a toast or message
             }
         }
 
