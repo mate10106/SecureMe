@@ -181,24 +181,49 @@ namespace SecureMe.Views
                 BorderBrush = Brushes.Transparent,
                 CornerRadius = new CornerRadius(5),
                 Margin = new Thickness(5),
-                Padding = new Thickness(5)
+                Padding = new Thickness(5),
+                Cursor = Cursors.Hand,
             };
 
             Grid passwordGrid = new Grid();
-            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // CheckBox
-            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Title
-            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Edit
-            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Copy
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Checkbox column
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Monogram column
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // Title column
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Edit button
+            passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Copy button
 
+            // Checkbox (Separate from Monogram)
             CheckBox passwordCheckBox = new CheckBox
             {
                 Style = (Style)FindResource("CustomCheckBoxStyle"),
-                Tag = GetAbbreviation(passwordEntry.Title),
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(5)
             };
             passwordCheckBox.Checked += PasswordCheckBox_Checked;
             passwordCheckBox.Unchecked += PasswordCheckBox_Unchecked;
+
+            // Monogram (Using Title abbreviation)
+            Border monogramBorder = new Border
+            {
+                Background = Brushes.Blue, // Ensures the monogram has the correct background
+                Width = 30,
+                Height = 30,
+                CornerRadius = new CornerRadius(5),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            // Create a TextBlock for the monogram text
+            TextBlock monogramTextBlock = new TextBlock
+            {
+                Text = GetAbbreviation(passwordEntry.Title),
+                Foreground = Brushes.White,
+                FontSize = 14,
+                FontWeight = FontWeights.Bold,
+                TextAlignment = TextAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
 
             // Title Button with TimeAgo
             Button titleButton = new Button
@@ -206,6 +231,7 @@ namespace SecureMe.Views
                 Content = new StackPanel
                 {
                     Orientation = Orientation.Horizontal,
+                    VerticalAlignment = VerticalAlignment.Center,
                     Children =
             {
                 new TextBlock
@@ -220,6 +246,7 @@ namespace SecureMe.Views
                 {
                     Text = GetTimeAgo(passwordEntry.LastUsed),
                     Foreground = Brushes.Gray,
+                    VerticalAlignment = VerticalAlignment.Center,
                     FontSize = 12,
                     Margin = new Thickness(10, 0, 0, 0)
                 }
@@ -248,23 +275,29 @@ namespace SecureMe.Views
             };
             copyButton.Click += CopyButton_Click;
 
+            // Assign columns
             Grid.SetColumn(passwordCheckBox, 0);
-            Grid.SetColumn(titleButton, 1);
-            Grid.SetColumn(editButton, 2);
-            Grid.SetColumn(copyButton, 3);
+            Grid.SetColumn(monogramTextBlock, 1);
+            Grid.SetColumn(titleButton, 2);
+            Grid.SetColumn(editButton, 3);
+            Grid.SetColumn(copyButton, 4);
 
+            // Add elements to grid
             passwordGrid.Children.Add(passwordCheckBox);
+            passwordGrid.Children.Add(monogramTextBlock);
             passwordGrid.Children.Add(titleButton);
             passwordGrid.Children.Add(editButton);
             passwordGrid.Children.Add(copyButton);
 
             passwordBorder.Child = passwordGrid;
 
+            // Add hover effect
             passwordBorder.MouseEnter += (s, e) => passwordBorder.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#1E90FF");
             passwordBorder.MouseLeave += (s, e) => passwordBorder.BorderBrush = Brushes.Transparent;
 
             PasswordListPanel.Children.Add(passwordBorder);
         }
+
 
         private string GetTimeAgo(DateTime lastUsed)
         {

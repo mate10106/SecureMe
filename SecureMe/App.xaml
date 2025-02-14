@@ -309,6 +309,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="MonogramStyle" TargetType="Border">
+            <Setter Property="Background" Value="#1E90FF" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
         <Style x:Key="CustomCheckBoxStyle" TargetType="CheckBox">
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="16" />
@@ -320,40 +328,46 @@
                     <ControlTemplate TargetType="CheckBox">
                         <Grid>
                             <Border x:Name="CheckBoxBorder"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            BorderThickness="2"
-                            CornerRadius="5"
-                            Width="40"
-                            Height="40"
-                            VerticalAlignment="Center">
+                        Background="Transparent"
+                        BorderBrush="#1E90FF"
+                        BorderThickness="2"
+                        CornerRadius="5"
+                        Width="40"
+                        Height="40"
+                        VerticalAlignment="Center">
                                 <Grid>
+                                    <!-- Monogram Box -->
                                     <Border x:Name="AbbreviationCube"
-                                    Background="#1E90FF"
-                                    Width="24"
-                                    Height="24"
-                                    CornerRadius="4"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center">
+                                Style="{StaticResource MonogramStyle}"
+                                Tag="{TemplateBinding Tag}">
                                         <TextBlock Text="{TemplateBinding Tag}"
-                                           Foreground="White"
-                                           FontSize="12"
-                                           FontWeight="Bold"/>
+                                    Foreground="White"
+                                    FontSize="12"
+                                    FontWeight="Bold"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"/>
                                     </Border>
+
+                                    <!-- Check Mark -->
                                     <Path x:Name="CheckMark"
-                                  Data="M 0 5 L 5 10 L 12 0"
-                                  Stroke="White"
-                                  StrokeThickness="2"
-                                  Visibility="Collapsed"/>
+                                Data="M 4 8 L 8 12 L 16 4"
+                                Stroke="White"
+                                StrokeThickness="2"
+                                Visibility="Collapsed"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
                                 </Grid>
                             </Border>
                         </Grid>
 
                         <ControlTemplate.Triggers>
+                            <!-- When Checked -->
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
                                 <Setter TargetName="CheckBoxBorder" Property="Background" Value="#1E90FF" />
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
                             </Trigger>
+
+                            <!-- When Pressed -->
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="CheckBoxBorder" Property="Background" Value="#1C86EE" />
                             </Trigger>
@@ -512,7 +526,7 @@
                     <Setter Property="Foreground" Value="White"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="DarkBlue"/>
+                    <Setter Property="Background" Value="#2743b3"/>
                     <Setter Property="Foreground" Value="White"/>
                 </Trigger>
             </Style.Triggers>
@@ -685,22 +699,41 @@
             </Setter>
         </Style>
         <Style x:Key="CopyButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Width" Value="24"/>
-            <Setter Property="Height" Value="24"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="Transparent">
+            <Setter Property="Width" Value="40"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="ToolTip" Value="Edit"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="2" CornerRadius="5" Padding="5">
                             <Path Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"
-                          Fill="White"
-                          Stretch="Uniform"/>
+                                  Fill="White"
+                                  HorizontalAlignment="Center"
+                                  Stretch="Uniform"/>
                         </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>    
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#1E90FF"/>
+                        <!-- Dodger Blue on hover -->
+                        <Setter Property="Foreground" Value="White"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#2743b3"/>
+                        <Setter Property="Foreground" Value="White"/>
+                    </Trigger>
+                </Style.Triggers>
+        </Style>
     </Application.Resources>
 </Application>
+                           
