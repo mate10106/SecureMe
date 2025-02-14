@@ -192,7 +192,6 @@ namespace SecureMe.Views
             passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Edit button
             passwordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto }); // Copy button
 
-            // Checkbox (Separate from Monogram)
             CheckBox passwordCheckBox = new CheckBox
             {
                 Style = (Style)FindResource("CustomCheckBoxStyle"),
@@ -202,30 +201,6 @@ namespace SecureMe.Views
             passwordCheckBox.Checked += PasswordCheckBox_Checked;
             passwordCheckBox.Unchecked += PasswordCheckBox_Unchecked;
 
-            // Monogram (Using Title abbreviation)
-            Border monogramBorder = new Border
-            {
-                Background = Brushes.Blue, // Ensures the monogram has the correct background
-                Width = 30,
-                Height = 30,
-                CornerRadius = new CornerRadius(5),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-
-            // Create a TextBlock for the monogram text
-            TextBlock monogramTextBlock = new TextBlock
-            {
-                Text = GetAbbreviation(passwordEntry.Title),
-                Foreground = Brushes.White,
-                FontSize = 14,
-                FontWeight = FontWeights.Bold,
-                TextAlignment = TextAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-
-            // Title Button with TimeAgo
             Button titleButton = new Button
             {
                 Content = new StackPanel
@@ -277,14 +252,12 @@ namespace SecureMe.Views
 
             // Assign columns
             Grid.SetColumn(passwordCheckBox, 0);
-            Grid.SetColumn(monogramTextBlock, 1);
             Grid.SetColumn(titleButton, 2);
             Grid.SetColumn(editButton, 3);
             Grid.SetColumn(copyButton, 4);
 
             // Add elements to grid
             passwordGrid.Children.Add(passwordCheckBox);
-            passwordGrid.Children.Add(monogramTextBlock);
             passwordGrid.Children.Add(titleButton);
             passwordGrid.Children.Add(editButton);
             passwordGrid.Children.Add(copyButton);
@@ -317,21 +290,6 @@ namespace SecureMe.Views
                 return $"{(int)(timeSince.TotalDays / 30)} months ago";
             else
                 return $"{(int)(timeSince.TotalDays / 365)} years ago";
-        }
-
-        private string GetAbbreviation(string title)
-        {
-            if (string.IsNullOrWhiteSpace(title))
-                return "N/A";
-
-            string[] words = title.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (words.Length == 1)
-            {
-                return words[0].Length >= 2 ? words[0].Substring(0, 2).ToUpper() : words[0].ToUpper();
-            }
-
-            return (words[0][0].ToString() + words[1][0].ToString()).ToUpper();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -442,7 +400,7 @@ namespace SecureMe.Views
             {
                 string decryptedPassword = SecureMe.Utilities.FileManager.DecryptData(passwordEntry.EncryptedPassword);
                 Clipboard.SetText(decryptedPassword);
-                // Optional: Show a toast or message
+                MessageBox.Show("Password copied to clipboard!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

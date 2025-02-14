@@ -17,5 +17,14 @@ namespace SecureMe.Utilities
                 return Convert.ToBase64String(hashedBytes);
             }
         }
+
+        public static bool VerifyPassword(string inputPassword, string storedHash)
+        {
+            // Hash the input password
+            string hashedInputPassword = HashPassword(inputPassword);
+
+            // Compare the hashed input password with the stored hash
+            return hashedInputPassword == storedHash;
+        }
     }
 }

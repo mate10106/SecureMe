@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SecureMe.Views
 {
@@ -22,13 +23,38 @@ namespace SecureMe.Views
     public partial class HomePage : Page
     {
         private List<Passwords.PasswordEntry> _allPasswords;
+        private DispatcherTimer _inactivityTimer;
         public HomePage()
         {
             InitializeComponent();
 
-            MainContentFrame.Navigate(new AllItemsPage());
+            StartInactivityTimer();
+
+            this.PreviewMouseMove += ResetInactivityTimer;
+            this.PreviewKeyDown += ResetInactivityTimer;
+
 
             _allPasswords = PasswordManager.LoadPasswords();
+            MainContentFrame.Navigate(new AllItemsPage());
+        }
+
+        private void StartInactivityTimer()
+        {
+            _inactivityTimer = new DispatcherTimer();
+            _inactivityTimer.Interval = TimeSpan.FromMinutes(10);
+            _inactivityTimer.Tick += InactivityTimer_Tick;
+            _inactivityTimer.Start();
+        }
+        private void ResetInactivityTimer(object sender, EventArgs e)
+        {
+            _inactivityTimer.Stop();
+            _inactivityTimer.Start();
+        }
+        private void InactivityTimer_Tick(object sender, EventArgs e)
+        {
+            _inactivityTimer.Stop();
+
+            NavigationService.Navigate(new MasterPasswordPage());
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)

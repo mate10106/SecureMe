@@ -2,20 +2,47 @@
 using SecureMe.Utilities;
 using SecureMe.Views;
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Navigation;
+using System.Drawing;
+using System.Windows.Forms;
+using Application = System.Windows.Application;
 
 namespace SecureMe
 {
     public partial class MainWindow : Window
     {
         private const int LoginValidityDays = 14;
+        private NotifyIcon _trayIcon;
+
+        public NotifyIcon TrayIcon => _trayIcon;
 
         public MainWindow()
         {
             InitializeComponent();
             CheckFileAndNavigate();
+            InitializeTrayIcon();
+        }
+
+        private void InitializeTrayIcon()
+        {
+            _trayIcon = new NotifyIcon();
+
+            _trayIcon.Visible = true;
+            _trayIcon.DoubleClick += (s, e) =>
+            {
+                this.Show();
+                this.WindowState = WindowState.Normal;
+            };
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+            base.OnClosing(e);
         }
 
         private void CheckFileAndNavigate()
@@ -53,15 +80,6 @@ namespace SecureMe
             {
                 _MainFrame.Content = new HomePage();
                 Console.WriteLine("Navigating to HomePage.");
-            }
-
-            if (user != null && user.IsLoggedIn)
-            {
-                _MainFrame.Content = new HomePage();
-            }
-            else
-            {
-                _MainFrame.Content = new MasterPasswordPage();
             }
         }
     }

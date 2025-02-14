@@ -1,4 +1,5 @@
 ﻿using SecureMe.Models;
+using SecureMe.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace SecureMe.Views
 
             if (string.IsNullOrEmpty(masterPassword))
             {
-                MessageBox.Show("Fields is required.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Password field is required.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -46,27 +47,29 @@ namespace SecureMe.Views
                     return;
                 }
 
-                string encryptedMasterPassword = Utilities.PasswordHasher.HashPassword(masterPassword);
+                // Verify the password using the new VerifyPassword method
+                bool isPasswordValid = PasswordHasher.VerifyPassword(
+                    masterPassword,
+                    _currentUser.HashedMasterPassword
+                );
 
-                if (_currentUser.HashedMasterPassword != encryptedMasterPassword)
+                if (!isPasswordValid)
                 {
                     MessageBox.Show("Invalid master password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
-                _currentUser.IsLoggedIn = true;
-
+                // Update the last login date
+                _currentUser.LastLoginDate = DateTime.Now;
                 UserManager.SaveUser(_currentUser);
 
+                // Navigate to the HomePage
                 NavigationService.Navigate(new HomePage());
-
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Authentication failed: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
     }
 }
