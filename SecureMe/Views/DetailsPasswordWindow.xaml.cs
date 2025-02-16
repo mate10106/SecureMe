@@ -20,9 +20,39 @@ namespace SecureMe.Views
     /// </summary>
     public partial class DetailsPasswordWindow : Window
     {
+        private bool isPasswordVisible = false;
         public DetailsPasswordWindow(Passwords.PasswordEntry passwordEntry)
         {
             InitializeComponent();
+
+            // Load existing values
+            txtTitle.Text = passwordEntry.Title;
+            txtUsername.Text = passwordEntry.Username;
+            txtPassword.Password = SecureMe.Utilities.FileManager.DecryptData(passwordEntry.EncryptedPassword);
+            txtUrl.Text = passwordEntry.URL;
+        }
+
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
+        {
+            isPasswordVisible = !isPasswordVisible;
+
+            if (isPasswordVisible)
+            {
+                txtPasswordVisible.Text = txtPassword.Password;
+                txtPasswordVisible.Visibility = Visibility.Visible;
+                txtPassword.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtPassword.Password = txtPasswordVisible.Text;
+                txtPassword.Visibility = Visibility.Visible;
+                txtPasswordVisible.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
