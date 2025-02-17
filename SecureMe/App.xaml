@@ -690,8 +690,8 @@
             </Setter>
         </Style>
         <Style x:Key="CopyButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="40"/>
-                <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="30"/>
+                <Setter Property="Height" Value="25"/>
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
@@ -703,7 +703,7 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                                    BorderThickness="2" CornerRadius="5" Padding="5">
+                                    BorderThickness="2" CornerRadius="5" Padding="2">
                             <Path Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"
                                   Fill="White"
                                   HorizontalAlignment="Center"

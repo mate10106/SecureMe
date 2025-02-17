@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace SecureMe.Views
 {
@@ -11,6 +12,13 @@ namespace SecureMe.Views
         {
             InitializeComponent();
 
+            txtTitle.Content = passwordEntry.Title;
+
+            if (!string.IsNullOrEmpty(passwordEntry.Title))
+            {
+                txtMonogram.Content = passwordEntry.Title.Substring(0, 2).ToUpper();
+            }
+
             txtUsername.Content = passwordEntry.Username;
             txtPassword.Password = SecureMe.Utilities.FileManager.DecryptData(passwordEntry.EncryptedPassword);
             txtUrl.Content = passwordEntry.URL;
@@ -18,21 +26,33 @@ namespace SecureMe.Views
 
         private void ShowCopyButton(object sender, MouseEventArgs e)
         {
-            if (sender is Grid grid)
+            if (sender is Border border)
             {
-                Button copyButton = grid.Children[2] as Button;
-                if (copyButton != null)
-                    copyButton.Visibility = Visibility.Visible;
+                // Change background on hover
+                border.Background = new SolidColorBrush(Color.FromRgb(67, 86, 117)); 
+
+                // Find the button inside the Grid
+                if (border.Child is Grid grid)
+                {
+                    Button copyButton = grid.Children[2] as Button;
+                    if (copyButton != null)
+                        copyButton.Visibility = Visibility.Visible;
+                }
             }
         }
 
         private void HideCopyButton(object sender, MouseEventArgs e)
         {
-            if (sender is Grid grid)
+            if (sender is Border border)
             {
-                Button copyButton = grid.Children[2] as Button;
-                if (copyButton != null)
-                    copyButton.Visibility = Visibility.Collapsed;
+                border.Background = new SolidColorBrush(Colors.Transparent);
+
+                if (border.Child is Grid grid)
+                {
+                    Button copyButton = grid.Children[2] as Button;
+                    if (copyButton != null)
+                        copyButton.Visibility = Visibility.Collapsed;
+                }
             }
         }
 
@@ -46,8 +66,6 @@ namespace SecureMe.Views
                     Clipboard.SetText(txtPassword.Password);
                 else if (button == btnCopyUrl)
                     Clipboard.SetText(txtUrl.Content.ToString());
-
-                MessageBox.Show("Copied to clipboard!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }
