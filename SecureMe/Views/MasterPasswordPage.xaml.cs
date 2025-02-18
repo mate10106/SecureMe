@@ -25,6 +25,30 @@ namespace SecureMe.Views
         public MasterPasswordPage()
         {
             InitializeComponent();
+            LoadUsername();
+        }
+
+        private void LoadUsername()
+        {
+            try
+            {
+                User currentUser = UserManager.LoadUser();
+
+                if (currentUser != null)
+                {
+                    txtUsername.Text = currentUser.Username;
+                    txtMonogram.Text = currentUser.Username.Substring(0, 2).ToUpper();
+                }
+                else
+                {
+                    txtUsername.Text = "Unknown User"; 
+                }
+            }
+            catch (Exception ex)
+            {
+                txtUsername.Text = "Error loading user";
+                Console.WriteLine($"Error loading username: {ex.Message}");
+            }
         }
 
         private void BtnLoginWithMasterPassword_Click(object sender, RoutedEventArgs e)
