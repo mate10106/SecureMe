@@ -66,7 +66,7 @@ namespace SecureMe.Views
                     MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     MainWindow main = Application.Current.MainWindow as MainWindow;
-                    main._MainFrame.Content = new CreateMasterPasswordPage();
+                    main._MainFrame.Content = new RecoveryPhrasePage();
                 }
                 else
                 {

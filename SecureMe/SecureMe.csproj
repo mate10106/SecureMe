@@ -116,8 +116,8 @@
     <Compile Include="Views\PersonalInfoPage.xaml.cs">
       <DependentUpon>PersonalInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RecoveryPhrase.xaml.cs">
-      <DependentUpon>RecoveryPhrase.xaml</DependentUpon>
+    <Compile Include="Views\RecoveryPhrasePage.xaml.cs">
+      <DependentUpon>RecoveryPhrasePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
@@ -127,6 +127,9 @@
     </Compile>
     <Compile Include="Views\TrashPage.xaml.cs">
       <DependentUpon>TrashPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VerifyRecoveryPhrasePage.xaml.cs">
+      <DependentUpon>VerifyRecoveryPhrasePage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -192,7 +195,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RecoveryPhrase.xaml">
+    <Page Include="Views\RecoveryPhrasePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TrashPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VerifyRecoveryPhrasePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -237,7 +244,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\english.txt" />
+    <Content Include="Resources\english.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="mountain_5od_icon.ico" />

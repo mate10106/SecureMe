@@ -1,4 +1,4 @@
-﻿<Page x:Class="SecureMe.Views.RecoveryPhrase"
+﻿<Page x:Class="SecureMe.Views.RecoveryPhrasePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -36,9 +36,14 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-                <Button Style="{StaticResource AuthButton}" FontSize="18" Width="500">
-                    I'VE SAVED MY RECOVERY PHRASE
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Style="{StaticResource AuthButton}" FontSize="18" Width="200" Click="CopyRecoveryPhrase_Click" Margin="0,0,20,0">
+                    Copy to Clipboard
                 </Button>
+                <Button Style="{StaticResource AuthButton}" FontSize="18" Width="200" Click="SavedRecoveryPhrase_Click">
+                    Continue
+                </Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>
