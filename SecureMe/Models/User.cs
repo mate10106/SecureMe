@@ -14,6 +14,7 @@ namespace SecureMe.Models
         public string HashedMasterPassword { get; set; }
         public DateTime LastLoginDate { get; set; }
         public bool IsLoggedIn { get; set; }
+        public bool IsLoginWithMasterPassword { get; set; }
         public List<string> RecoveryPhrase { get; set; }
         public bool HasRecoveryPhraseVerified { get; set; }
     }

@@ -64,9 +64,18 @@ namespace SecureMe.Views
                 if (user != null)
                 {
                     MessageBox.Show("Login successful.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
                     MainWindow main = Application.Current.MainWindow as MainWindow;
-                    main._MainFrame.Content = new RecoveryPhrasePage();
+
+                    user.IsLoggedIn = true;
+                    UserManager.SaveUser(user);
+
+                    if (!user.HasRecoveryPhraseVerified)
+                    {
+                        main._MainFrame.Content = new RecoveryPhrasePage();
+                        return;
+                    }
+
+                    main._MainFrame.Content = new MasterPasswordPage();
                 }
                 else
                 {

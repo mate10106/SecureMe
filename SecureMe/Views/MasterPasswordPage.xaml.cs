@@ -85,6 +85,7 @@ namespace SecureMe.Views
 
                 // Update the last login date
                 _currentUser.LastLoginDate = DateTime.Now;
+                _currentUser.IsLoginWithMasterPassword = true;
                 UserManager.SaveUser(_currentUser);
 
                 // Navigate to the HomePage
@@ -94,6 +95,16 @@ namespace SecureMe.Views
             {
                 MessageBox.Show($"Authentication failed: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            User _currentUser = UserManager.LoadUser();
+
+            _currentUser.IsLoggedIn = false;
+
+            NavigationService.Navigate(new LoginPage());
+            MessageBox.Show("You have been logged out.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

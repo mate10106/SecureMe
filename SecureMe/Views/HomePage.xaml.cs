@@ -114,7 +114,7 @@ namespace SecureMe.Views
             {
                 User _currentUser = UserManager.LoadUser();
 
-                _currentUser.IsLoggedIn = false;
+                _currentUser.IsLoginWithMasterPassword = false;
 
                 UserManager.SaveUser(_currentUser);
 

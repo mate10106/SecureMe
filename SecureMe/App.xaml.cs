@@ -15,7 +15,6 @@ namespace SecureMe
     {
         protected override void OnExit(ExitEventArgs e)
         {
-            // Dispose of the tray icon
             if (Application.Current.MainWindow is MainWindow mainWindow)
             {
                 mainWindow.TrayIcon.Dispose();

@@ -71,8 +71,33 @@ namespace SecureMe
                 return;
             }
 
+            if (!user.IsLoggedIn)
+            {
+                _MainFrame.Content = new LoginPage();
+                Console.WriteLine("Navigating to LoginPage for authentication.");
+                return;
+            }
+
+            if (!user.IsLoginWithMasterPassword)
+            {
+                _MainFrame.Content = new MasterPasswordPage();
+                Console.WriteLine("Navigating to MasterPasswordPage.");
+                return;
+            }
+
+            if (user.IsLoggedIn && user.IsLoginWithMasterPassword)
+            {
+                _MainFrame.Content = new HomePage();
+                Console.WriteLine("Navigating to HomePage.");
+                return;
+            }
+
+            _MainFrame.Content = new MasterPasswordPage();
+            Console.WriteLine("Navigating to MasterPasswordPage for authentication.");
+
             if (user.LastLoginDate == default || user.LastLoginDate.AddDays(LoginValidityDays) < DateTime.Now)
             {
+                user.IsLoginWithMasterPassword = false;
                 _MainFrame.Content = new MasterPasswordPage();
                 Console.WriteLine("Navigating to MasterPasswordPage for authentication.");
             }
