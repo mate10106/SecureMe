@@ -99,12 +99,21 @@ namespace SecureMe.Views
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            User _currentUser = UserManager.LoadUser();
+            try
+            {
+                User _currentUser = UserManager.LoadUser();
 
-            _currentUser.IsLoggedIn = false;
+                _currentUser.IsLoggedIn = false;
+                _currentUser.IsLoginWithMasterPassword = false;
+                UserManager.SaveUser(_currentUser);
 
-            NavigationService.Navigate(new LoginPage());
-            MessageBox.Show("You have been logged out.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                NavigationService.Navigate(new LoginPage());
+                MessageBox.Show("You have been logged out.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)    
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
