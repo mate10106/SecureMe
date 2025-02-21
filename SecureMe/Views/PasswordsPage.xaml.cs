@@ -29,6 +29,8 @@ namespace SecureMe.Views
 
             if (filteredPasswords != null)
             {
+                filteredPasswords = filteredPasswords.OrderByDescending(p => p.LastUsed).ToList();
+
                 isSearchMode = true;
                 allPasswords = filteredPasswords;
                 loadedCount = filteredPasswords.Count;
@@ -150,12 +152,14 @@ namespace SecureMe.Views
 
         private void LoadPasswords()
         {
-            if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SecureMe", "passwords.dat")))
+            string passwordsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SecureMe", "passwords.dat");
+            if (File.Exists(passwordsFile))
             {
                 BtnImportPasswords.Visibility = Visibility.Collapsed;
                 PasswordListPanel.Visibility = Visibility.Visible;
 
                 allPasswords = PasswordManager.LoadPasswords(0, PageSize);
+                allPasswords = allPasswords.OrderByDescending(p => p.LastUsed).ToList();
                 loadedCount = allPasswords.Count;
 
                 PasswordListPanel.Children.Clear();
@@ -337,6 +341,18 @@ namespace SecureMe.Views
             }
         }
 
+        private void RefreshPasswordListUI()
+        {
+            allPasswords = allPasswords.OrderByDescending(p => p.LastUsed).ToList();
+            PasswordListPanel.Children.Clear();
+
+            foreach (var password in allPasswords)
+            {
+                AddPasswordToUI(password);
+            }
+        }
+
+
         private async void LoadMorePasswords()
         {
             if (isLoading) return;
@@ -388,6 +404,8 @@ namespace SecureMe.Views
                 passwordEntry.LastUsed = DateTime.Now;
                 PasswordManager.UpdatePassword(passwordEntry);
                 UpdatePasswordInUI(passwordEntry);
+
+                RefreshPasswordListUI();
 
                 var detailsWindow = new DetailsPasswordWindow(passwordEntry);
                 detailsWindow.Show();
