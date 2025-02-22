@@ -343,14 +343,21 @@ namespace SecureMe.Views
 
         private void RefreshPasswordListUI()
         {
+            allPasswords = PasswordManager.LoadPasswords(0, int.MaxValue);
             allPasswords = allPasswords.OrderByDescending(p => p.LastUsed).ToList();
+
+            loadedCount = Math.Min(allPasswords.Count, PageSize);
+
             PasswordListPanel.Children.Clear();
 
-            foreach (var password in allPasswords)
+            foreach (var password in allPasswords.Take(PageSize))
             {
                 AddPasswordToUI(password);
             }
+
+            PasswordListScrollViewer.ScrollToTop();
         }
+
 
 
         private async void LoadMorePasswords()
@@ -403,6 +410,8 @@ namespace SecureMe.Views
             {
                 passwordEntry.LastUsed = DateTime.Now;
                 PasswordManager.UpdatePassword(passwordEntry);
+
+
                 UpdatePasswordInUI(passwordEntry);
 
                 RefreshPasswordListUI();
