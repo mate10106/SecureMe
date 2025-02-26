@@ -83,6 +83,9 @@
     <Compile Include="Views\AddExistingPasswordsPage.xaml.cs">
       <DependentUpon>AddExistingPasswordsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddNewPasswordWindow.xaml.cs">
+      <DependentUpon>AddNewPasswordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddSecureNotes.xaml.cs">
       <DependentUpon>AddSecureNotes.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddExistingPasswordsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewPasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

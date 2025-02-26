@@ -323,7 +323,32 @@ namespace SecureMe.Views
 
         private void BtnAddPassword_Click(object sender, RoutedEventArgs e)
         {
+            AddNewPasswordWindow addWindow = new AddNewPasswordWindow();
 
+            bool? result = addWindow.ShowDialog();
+
+            if (result == true)
+            {
+                RefreshPasswordListUI();
+                Passwords.PasswordEntry newPassword = addWindow.CreatedPassword;
+
+                if (newPassword != null)
+                {
+                    allPasswords.Insert(0, newPassword);
+
+                    PasswordListPanel.Children.Clear();
+                    foreach (var password in allPasswords.Take(loadedCount))
+                    {
+                        AddPasswordToUI(password);
+                    }
+
+                    if (allPasswords.Count > 0)
+                    {
+                        BtnImportPasswords.Visibility = Visibility.Collapsed;
+                        PasswordListPanel.Visibility = Visibility.Visible;
+                    }
+                }
+            }
         }
 
         private void PasswordListScroll(object sender, ScrollChangedEventArgs e)
@@ -357,8 +382,6 @@ namespace SecureMe.Views
 
             PasswordListScrollViewer.ScrollToTop();
         }
-
-
 
         private async void LoadMorePasswords()
         {
