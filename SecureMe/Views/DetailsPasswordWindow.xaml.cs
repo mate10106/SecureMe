@@ -3,11 +3,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Runtime.InteropServices;
+using System;
 
 namespace SecureMe.Views
 {
     public partial class DetailsPasswordWindow : Window
     {
+        [DllImport("user32.dll")]
+         private static extern IntPtr GetOpenClipboardWindow();
         public DetailsPasswordWindow(Passwords.PasswordEntry passwordEntry)
         {
             InitializeComponent();
@@ -28,10 +32,8 @@ namespace SecureMe.Views
         {
             if (sender is Border border)
             {
-                // Change background on hover
                 border.Background = new SolidColorBrush(Color.FromRgb(67, 86, 117)); 
 
-                // Find the button inside the Grid
                 if (border.Child is Grid grid)
                 {
                     Button copyButton = grid.Children[2] as Button;
@@ -60,13 +62,43 @@ namespace SecureMe.Views
         {
             if (sender is Button button)
             {
+                string textToCopy = "";
+
                 if (button == btnCopyUsername)
-                    Clipboard.SetText(txtUsername.Content.ToString());
+                    textToCopy = txtUsername.Content.ToString();
                 else if (button == btnCopyPassword)
-                    Clipboard.SetText(txtPassword.Password);
+                    textToCopy = txtPassword.Password;
                 else if (button == btnCopyUrl)
-                    Clipboard.SetText(txtUrl.Content.ToString());
+                    textToCopy = txtUrl.Content.ToString();
+
+                TryCopyToClipboard(textToCopy);
             }
+        }
+
+        private void TryCopyToClipboard(string text)
+        {
+            const int maxAttempts = 3;
+            Exception lastException = null;
+
+            for (int attempt = 0; attempt < maxAttempts; attempt++)
+            {
+                try
+                {
+                    IDataObject dataObject = new DataObject();
+                    dataObject.SetData(DataFormats.Text, text);
+                    Clipboard.SetDataObject(dataObject, true);
+                    return;
+                }
+                catch (ExternalException ex)
+                {
+                    lastException = ex;
+
+                    System.Threading.Thread.Sleep(100);
+                }
+            }
+
+            MessageBox.Show($"Could not copy to clipboard: {lastException.Message}\n\nYour antivirus software might be blocking clipboard access.",
+                "Clipboard Error", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }

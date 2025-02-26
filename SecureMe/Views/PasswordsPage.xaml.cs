@@ -426,8 +426,25 @@ namespace SecureMe.Views
             if (sender is Button button && button.Tag is Passwords.PasswordEntry passwordEntry)
             {
                 string decryptedPassword = SecureMe.Utilities.FileManager.DecryptData(passwordEntry.EncryptedPassword);
-                Clipboard.SetText(decryptedPassword);
-                MessageBox.Show("Password copied to clipboard!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                const int maxAttempts = 3;
+                Exception lastException = null;
+
+                for (int attempt = 0; attempt < maxAttempts; attempt++)
+                {
+                    try
+                    {
+                        Clipboard.SetText(decryptedPassword);
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        lastException = ex;
+                        System.Threading.Thread.Sleep(100);
+                    }
+                }
+                MessageBox.Show($"Could not copy to clipboard: {lastException.Message}\n\nYour antivirus software might be blocking clipboard access.",
+                    "Clipboard Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -479,7 +496,6 @@ namespace SecureMe.Views
 
             CheckedCountText.Text = $"({count} selected)";
 
-            // Update Select All checkbox state
             CheckAllBox.Checked -= CheckAllBox_Checked;
             CheckAllBox.Unchecked -= CheckAllBox_Unchecked;
             CheckAllBox.IsChecked = count == PasswordListPanel.Children.Count;
