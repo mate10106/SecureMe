@@ -755,7 +755,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style x:Key="ActionButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#1E293B"/>
             <Setter Property="Foreground" Value="White"/>
