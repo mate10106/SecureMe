@@ -14,7 +14,6 @@ namespace SecureMe.Views
             InitializeComponent();
             _passwordEntry = passwordEntry;
 
-            // Load existing values
             txtTitle.Text = _passwordEntry.Title;
             txtUsername.Text = _passwordEntry.Username;
             txtPassword.Password = SecureMe.Utilities.FileManager.DecryptData(_passwordEntry.EncryptedPassword);
@@ -29,7 +28,6 @@ namespace SecureMe.Views
             _passwordEntry.URL = txtUrl.Text;
             _passwordEntry.LastUsed = DateTime.Now;
 
-            // Save updated passwords
             PasswordManager.UpdatePasswords(_passwordEntry);
             MessageBox.Show("Password updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 

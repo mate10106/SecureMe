@@ -13,6 +13,7 @@ namespace SecureMe.Views
         public Passwords.PasswordEntry CreatedPassword { get; private set; }
         public delegate void PasswordAddedEventHandler(Passwords.PasswordEntry newPassword);
         public event PasswordAddedEventHandler PasswordAdded;
+        private bool isPasswordVisible = false;
 
         private Random random = new Random();
 
@@ -165,6 +166,24 @@ namespace SecureMe.Views
         {
             this.DialogResult = false;
             this.Close();
+        }
+
+        private void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
+        {
+            isPasswordVisible = !isPasswordVisible;
+
+            if (isPasswordVisible)
+            {
+                txtPasswordVisible.Text = txtPassword.Password;
+                txtPasswordVisible.Visibility = Visibility.Visible;
+                txtPassword.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtPassword.Password = txtPasswordVisible.Text;
+                txtPassword.Visibility = Visibility.Visible;
+                txtPasswordVisible.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
