@@ -12,10 +12,10 @@ namespace SecureMe.Views
     {
         public Passwords.PasswordEntry CreatedPassword { get; private set; }
         public delegate void PasswordAddedEventHandler(Passwords.PasswordEntry newPassword);
-        public event PasswordAddedEventHandler PasswordAdded;
+
         private bool isPasswordVisible = false;
 
-        private Random random = new Random();
+        private readonly Random random = new Random();
 
         public AddNewPasswordWindow()
         {
@@ -115,9 +115,7 @@ namespace SecureMe.Views
             for (int i = array.Length - 1; i > 0; i--)
             {
                 int j = random.Next(i + 1);
-                char temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
+                (array[i], array[j]) = (array[j], array[i]);
             }
             return new string(array);
         }

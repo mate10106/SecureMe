@@ -36,8 +36,7 @@ namespace SecureMe.Views
 
                 if (border.Child is Grid grid)
                 {
-                    Button copyButton = grid.Children[2] as Button;
-                    if (copyButton != null)
+                    if (grid.Children[2] is Button copyButton)
                         copyButton.Visibility = Visibility.Visible;
                 }
             }
@@ -51,8 +50,7 @@ namespace SecureMe.Views
 
                 if (border.Child is Grid grid)
                 {
-                    Button copyButton = grid.Children[2] as Button;
-                    if (copyButton != null)
+                    if (grid.Children[2] is Button copyButton)
                         copyButton.Visibility = Visibility.Collapsed;
                 }
             }
