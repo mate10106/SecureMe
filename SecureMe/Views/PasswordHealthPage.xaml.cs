@@ -20,14 +20,14 @@ namespace SecureMe.Views
         private void LoadAndDisplayPasswordAnalysis()
         {
             var passwords = PasswordManager.LoadPasswords();
-            AnalysisPanel.Children.Clear(); // Clear existing entries
+            AnalysisPanel.Children.Clear();
 
             foreach (var entry in passwords)
             {
                 string plainPassword = FileManager.DecryptData(entry.EncryptedPassword);
                 var analysis = PasswordAnalysisHelper.EvaluatePasswordStrength(plainPassword);
 
-                if (analysis.Strength == "Strong") continue; // Skip strong passwords
+                if (analysis.Strength == "Strong") continue;
 
                 // Main Grid layout
                 var grid = new Grid();
