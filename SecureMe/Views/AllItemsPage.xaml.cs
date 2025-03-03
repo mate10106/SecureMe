@@ -20,13 +20,10 @@ namespace SecureMe.Views
 
         private void LoadDashboardData()
         {
-            // Load all passwords
             var allPasswords = PasswordManager.LoadPasswords();
 
-            // Update stats
             UpdatePasswordStats(allPasswords);
 
-            // Load recent items
             LoadRecentItems(allPasswords);
         }
 
@@ -48,7 +45,6 @@ namespace SecureMe.Views
                 { "Weak", 0 }
             };
 
-            // Dictionary to track password reuse
             Dictionary<string, int> passwordOccurrences = new Dictionary<string, int>();
 
             foreach (var entry in allPasswords)
